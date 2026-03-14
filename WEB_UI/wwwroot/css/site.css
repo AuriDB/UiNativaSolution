@@ -1,0 +1,272 @@
+/* ═══════════════════════════════════════════════════════════
+   Sistema Nativa  ·  site.css
+   Bootswatch Minty  ·  Primary #78c2ad  ·  Success #56cc9d
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Utilidades de espaciado ──────────────────────────── */
+.py-6 { padding-top:    5rem !important; padding-bottom: 5rem !important; }
+.text-white-75 { color: rgba(255,255,255,.75) !important; }
+
+/* ── Hero (Landing Project) ───────────────────────────── */
+.psa-hero {
+    background: linear-gradient(135deg, #f0faf7 0%, #e0f5ef 50%, #d0efea 100%);
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Figura visual hero */
+.psa-hero-visual {
+    position: relative;
+    display:  inline-block;
+    width:    320px;
+    height:   320px;
+}
+.psa-hero-icon {
+    font-size:    12rem;
+    color:        #78c2ad;
+    opacity:      .25;
+    position:     absolute;
+    top:          50%;
+    left:         50%;
+    transform:    translate(-50%, -52%);
+    line-height:  1;
+}
+.psa-floating-badge {
+    position:     absolute;
+    border-radius: 50px;
+    padding:      .35rem .75rem;
+    font-size:    .78rem;
+    font-weight:  600;
+    white-space:  nowrap;
+    box-shadow:   0 4px 12px rgba(0,0,0,.15);
+    animation:    float 3s ease-in-out infinite;
+}
+.psa-fb-1 { top: 10%;  left:  -5%; animation-delay: 0s;   }
+.psa-fb-2 { top: 10%;  right: -5%; animation-delay: .75s; }
+.psa-fb-3 { bottom: 15%; left:  0;  animation-delay: 1.5s; }
+.psa-fb-4 { bottom: 15%; right: 0;  animation-delay: 2.25s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0);    }
+    50%       { transform: translateY(-8px); }
+}
+
+/* ── Íconos caja ──────────────────────────────────────── */
+.psa-icon-box {
+    width:        48px;
+    height:       48px;
+    border-radius: .75rem;
+    display:      flex;
+    align-items:  center;
+    justify-content: center;
+    font-size:    1.25rem;
+    flex-shrink:  0;
+}
+
+/* ── Cards de pasos ───────────────────────────────────── */
+.psa-step-card {
+    transition: transform .2s, box-shadow .2s;
+    border-radius: 1rem !important;
+}
+.psa-step-card:hover {
+    transform:  translateY(-4px);
+    box-shadow: 0 .75rem 1.5rem rgba(0,0,0,.12) !important;
+}
+.psa-step-num {
+    width:        36px;
+    height:       36px;
+    border-radius: 50%;
+    display:      flex;
+    align-items:  center;
+    justify-content: center;
+    font-weight:  700;
+    font-size:    1rem;
+}
+
+/* ── Sección estadísticas ─────────────────────────────── */
+.psa-stats-section {
+    background: linear-gradient(135deg, #78c2ad 0%, #56cc9d 100%);
+}
+.psa-stat-card { padding: 1rem; }
+
+/* ── CTA side ─────────────────────────────────────────── */
+.psa-cta-side {
+    background: linear-gradient(135deg, #78c2ad, #56cc9d);
+}
+
+/* ── Fondo subtle beneficios ──────────────────────────── */
+.psa-bg-gradient-subtle {
+    background: linear-gradient(180deg, #f8fdfb 0%, #eef8f4 100%);
+}
+
+/* ── Team hero ────────────────────────────────────────── */
+.psa-team-hero {
+    background: linear-gradient(135deg, #343a40 0%, #495057 100%);
+    padding: 6rem 0;
+}
+
+/* ── Team cards ───────────────────────────────────────── */
+.psa-team-card {
+    transition: transform .2s, box-shadow .2s;
+}
+.psa-team-card:hover {
+    transform:  translateY(-6px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.12) !important;
+}
+.psa-avatar {
+    width:        72px;
+    height:       72px;
+    border-radius: 50%;
+    display:      flex;
+    align-items:  center;
+    justify-content: center;
+    font-size:    1.5rem;
+    font-weight:  700;
+}
+
+/* ── Tech cards ───────────────────────────────────────── */
+.psa-tech-card {
+    transition: transform .2s, box-shadow .2s;
+}
+.psa-tech-card:hover {
+    transform:  translateY(-4px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1) !important;
+    background: #f0faf7 !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   AUTH PAGES
+   ══════════════════════════════════════════════════════ */
+.psa-auth-body {
+    min-height:    100vh;
+    background:    linear-gradient(135deg, #e8f8f3 0%, #d0f0e8 50%, #c2eae0 100%);
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+    padding:       2rem 1rem;
+    overflow:      hidden;
+    position:      relative;
+}
+
+/* Decoración de fondo */
+.psa-auth-deco {
+    position:   fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow:   hidden;
+    z-index:    0;
+}
+.psa-auth-deco i {
+    position:   absolute;
+    font-size:  6rem;
+    color:      #78c2ad;
+    opacity:    .06;
+    animation:  float 6s ease-in-out infinite;
+}
+.psa-deco-1 { top: 5%;   left: 3%;   font-size: 8rem;  animation-delay: 0s;   }
+.psa-deco-2 { top: 60%;  left: 2%;   font-size: 5rem;  animation-delay: 1s;   }
+.psa-deco-3 { top: 20%;  right: 3%;  font-size: 6rem;  animation-delay: 2s;   }
+.psa-deco-4 { bottom: 5%; right: 5%; font-size: 9rem;  animation-delay: 3s;   }
+
+.psa-auth-wrapper {
+    position:    relative;
+    z-index:     1;
+    width:       100%;
+    max-width:   440px;
+}
+
+.psa-auth-card { width: 100%; }
+.psa-auth-card-wide { max-width: 540px; }
+
+/* Logo auth */
+.psa-auth-logo {
+    width:        72px;
+    height:       72px;
+    border-radius: 50%;
+    background:   linear-gradient(135deg, #78c2ad, #56cc9d);
+    display:      inline-flex;
+    align-items:  center;
+    justify-content: center;
+    font-size:    2rem;
+    color:        white;
+    box-shadow:   0 4px 20px rgba(120,194,173,.4);
+}
+
+/* Icono circular (forgot pwd) */
+.psa-icon-circle {
+    width:        64px;
+    height:       64px;
+    border-radius: 50%;
+    display:      inline-flex;
+    align-items:  center;
+    justify-content: center;
+    font-size:    1.75rem;
+}
+
+/* ── OTP inputs ───────────────────────────────────────── */
+.psa-otp-input {
+    width:   52px !important;
+    height:  60px !important;
+    padding: .25rem !important;
+    font-size: 1.75rem !important;
+    border-radius: .75rem !important;
+    transition: border-color .15s, box-shadow .15s;
+}
+.psa-otp-input:focus {
+    border-color: #78c2ad !important;
+    box-shadow:   0 0 0 .2rem rgba(120,194,173,.3) !important;
+}
+
+/* ── Stepper de registro ──────────────────────────────── */
+.psa-step-dot {
+    width:        32px;
+    height:       32px;
+    border-radius: 50%;
+    background:   #dee2e6;
+    color:        #6c757d;
+    display:      flex;
+    align-items:  center;
+    justify-content: center;
+    font-weight:  700;
+    font-size:    .85rem;
+    flex-shrink:  0;
+    transition:   all .3s;
+}
+.psa-step-dot-active {
+    background: #78c2ad !important;
+    color:      white !important;
+    box-shadow: 0 0 0 4px rgba(120,194,173,.25);
+}
+.psa-step-dot-done {
+    background: #56cc9d !important;
+    color:      white !important;
+}
+.psa-step-line {
+    height:     2px;
+    background: #dee2e6;
+    transition: background .3s;
+}
+
+/* ── Barras fortaleza contraseña ──────────────────────── */
+.psa-pwd-strength-bar {
+    height:     6px;
+    background: #dee2e6;
+    transition: background .3s;
+}
+.psa-str-active { opacity: 1 !important; }
+
+/* ══════════════════════════════════════════════════════
+   DASHBOARD
+   ══════════════════════════════════════════════════════ */
+.psa-icon-box.fs-3 {
+    width:  56px;
+    height: 56px;
+    font-size: 1.5rem !important;
+    border-radius: .875rem;
+}
+
+/* ── Scrollbar suave ──────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #78c2ad; border-radius: 3px; }

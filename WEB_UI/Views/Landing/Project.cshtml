@@ -1,0 +1,402 @@
+@{
+    Layout = "../Shared/_Layout_Public.cshtml";
+    ViewData["Title"] = "Inicio";
+}
+
+<!-- SECCIÓN 1 · HERO -->
+<section class="psa-hero">
+    <div class="container py-5">
+        <div class="row align-items-center g-5 py-4">
+            <div class="col-lg-6">
+                <div class="badge bg-success bg-opacity-20 text-success px-3 py-2 rounded-pill mb-3 fs-6">
+                    <i class="bi bi-patch-check-fill me-1"></i>Programa Oficial &mdash; Costa Rica
+                </div>
+                <h1 class="display-4 fw-bold lh-sm mb-3">
+                    Pago por<br/>
+                    <span class="text-primary">Servicios<br/>Ambientales</span>
+                </h1>
+                <p class="lead text-muted mb-4">
+                    Registra tu finca, conserva los recursos naturales y recibe
+                    <strong>hasta 12 pagos mensuales</strong> por proteger
+                    el patrimonio verde de Costa Rica.
+                </p>
+                <div class="d-flex flex-wrap gap-3 mb-5">
+                    <a href="/Register" class="btn btn-primary btn-lg px-4 shadow-sm">
+                        <i class="bi bi-person-plus me-2"></i>Registrar mi finca
+                    </a>
+                    <a href="/Login" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar sesión
+                    </a>
+                </div>
+                <div class="d-flex flex-wrap gap-4">
+                    <div class="text-center">
+                        <div class="fw-bold fs-3 text-primary">12</div>
+                        <div class="text-muted small">Pagos mensuales</div>
+                    </div>
+                    <div class="vr d-none d-sm-block"></div>
+                    <div class="text-center">
+                        <div class="fw-bold fs-3 text-primary">100%</div>
+                        <div class="text-muted small">En línea</div>
+                    </div>
+                    <div class="vr d-none d-sm-block"></div>
+                    <div class="text-center">
+                        <div class="fw-bold fs-3 text-primary">3</div>
+                        <div class="text-muted small">Roles del sistema</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="psa-hero-visual">
+                    <i class="bi bi-tree-fill psa-hero-icon"></i>
+                    <span class="psa-floating-badge psa-fb-1 bg-success text-white">
+                        <i class="bi bi-droplet-fill me-1"></i>Agua
+                    </span>
+                    <span class="psa-floating-badge psa-fb-2 bg-primary text-white">
+                        <i class="bi bi-tree me-1"></i>Bosque
+                    </span>
+                    <span class="psa-floating-badge psa-fb-3 bg-info text-white">
+                        <i class="bi bi-mountains me-1"></i>Topografía
+                    </span>
+                    <span class="psa-floating-badge psa-fb-4 bg-warning text-dark">
+                        <i class="bi bi-cash-coin me-1"></i>Pagos
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 2 · ¿QUÉ ES EL Nativa? -->
+<section class="py-6 bg-light" id="que-es">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5 order-lg-2">
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="psa-icon-box bg-primary text-white"><i class="bi bi-patch-check-fill"></i></div>
+                        <div><div class="fw-semibold">Programa certificado</div><div class="text-muted small">Avalado institucionalmente</div></div>
+                    </div>
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="psa-icon-box bg-success text-white"><i class="bi bi-tree-fill"></i></div>
+                        <div><div class="fw-semibold">Conservación activa</div><div class="text-muted small">Bosques, agua y biodiversidad</div></div>
+                    </div>
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="psa-icon-box bg-warning text-dark"><i class="bi bi-cash-coin"></i></div>
+                        <div><div class="fw-semibold">Retribución económica</div><div class="text-muted small">Calculada según tu finca</div></div>
+                    </div>
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="psa-icon-box bg-info text-white"><i class="bi bi-graph-up-arrow"></i></div>
+                        <div><div class="fw-semibold">Proceso transparente</div><div class="text-muted small">Seguimiento en tiempo real</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 order-lg-1">
+                <span class="badge text-bg-success px-3 py-2 rounded-pill mb-3">¿Qué es el PSA?</span>
+                <h2 class="display-6 fw-bold mb-4">
+                    Un programa que <span class="text-primary">recompensa</span> la conservación
+                </h2>
+                <p class="text-muted mb-3">
+                    El <strong>Pago por Servicios Ambientales (PSA)</strong> es un mecanismo financiero que
+                    retribuye a propietarios de terrenos por conservar sus recursos naturales: bosques,
+                    fuentes de agua, biodiversidad y paisaje.
+                </p>
+                <p class="text-muted mb-4">
+                    Los dueños registran sus fincas, pasan por evaluación técnica de un
+                    <strong>Ingeniero Forestal</strong> certificado, y al ser aprobados reciben
+                    un plan de <strong>12 pagos mensuales</strong> calculados automáticamente.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge border border-primary text-primary px-3 py-2"><i class="bi bi-tree me-1"></i>Bosque Primario</span>
+                    <span class="badge border border-success text-success px-3 py-2"><i class="bi bi-droplet me-1"></i>Fuentes de agua</span>
+                    <span class="badge border border-info text-info px-3 py-2"><i class="bi bi-mountains me-1"></i>Topografía</span>
+                    <span class="badge border border-warning text-warning px-3 py-2"><i class="bi bi-flower2 me-1"></i>Biodiversidad</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 3 · ¿CÓMO FUNCIONA? -->
+<section class="py-6" id="como-funciona">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge text-bg-primary px-3 py-2 rounded-pill mb-3">¿Cómo funciona?</span>
+            <h2 class="display-6 fw-bold">Proceso en <span class="text-primary">4 pasos</span></h2>
+            <p class="text-muted col-md-6 mx-auto">Desde el registro hasta tu primer pago, te acompañamos en cada etapa.</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card border-0 h-100 text-center psa-step-card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="psa-step-num bg-primary text-white mx-auto mb-3">1</div>
+                        <i class="bi bi-person-plus-fill fs-1 text-primary mb-3 d-block"></i>
+                        <h5 class="fw-bold">Regístrate</h5>
+                        <p class="text-muted small mb-0">Crea tu cuenta con cédula y correo. Verificación por OTP de 6 dígitos.</p>
+                    </div>
+                    <div class="card-footer bg-primary bg-opacity-10 border-0 py-2">
+                        <small class="text-primary fw-semibold"><i class="bi bi-clock me-1"></i>~5 minutos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card border-0 h-100 text-center psa-step-card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="psa-step-num bg-success text-white mx-auto mb-3">2</div>
+                        <i class="bi bi-map-fill fs-1 text-success mb-3 d-block"></i>
+                        <h5 class="fw-bold">Registra tu finca</h5>
+                        <p class="text-muted small mb-0">Ingresa datos, ubica en el mapa con Leaflet y adjunta documentos en Azure.</p>
+                    </div>
+                    <div class="card-footer bg-success bg-opacity-10 border-0 py-2">
+                        <small class="text-success fw-semibold"><i class="bi bi-clock me-1"></i>~15 minutos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card border-0 h-100 text-center psa-step-card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="psa-step-num bg-info text-white mx-auto mb-3">3</div>
+                        <i class="bi bi-clipboard2-check-fill fs-1 text-info mb-3 d-block"></i>
+                        <h5 class="fw-bold">Evaluación técnica</h5>
+                        <p class="text-muted small mb-0">Un Ingeniero Forestal evalúa tu finca y emite el dictamen de aprobación.</p>
+                    </div>
+                    <div class="card-footer bg-info bg-opacity-10 border-0 py-2">
+                        <small class="text-info fw-semibold"><i class="bi bi-clock me-1"></i>Según disponibilidad</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card border-0 h-100 text-center psa-step-card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="psa-step-num bg-warning text-dark mx-auto mb-3">4</div>
+                        <i class="bi bi-cash-coin fs-1 text-warning mb-3 d-block"></i>
+                        <h5 class="fw-bold">Recibe tus pagos</h5>
+                        <p class="text-muted small mb-0">Registra tu IBAN y recibe 12 pagos automáticos con comprobante PDF.</p>
+                    </div>
+                    <div class="card-footer bg-warning bg-opacity-10 border-0 py-2">
+                        <small class="text-warning fw-semibold"><i class="bi bi-clock me-1"></i>30 días tras aprobación</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 4 · BENEFICIOS -->
+<section class="py-6 bg-light" id="beneficios">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge text-bg-success px-3 py-2 rounded-pill mb-3">Beneficios</span>
+            <h2 class="display-6 fw-bold">¿Por qué unirte a <span class="text-primary">Nativa</span>?</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 h-100 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-primary text-white py-3 border-0">
+                        <i class="bi bi-wallet2 me-2"></i><span class="fw-bold">Apoyo económico</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Pagos mensuales calculados según hectáreas y características ambientales de tu finca.</p>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>12 pagos automáticos</li>
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Comprobante PDF por pago</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>IBAN actualizable en cualquier momento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 h-100 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-success text-white py-3 border-0">
+                        <i class="bi bi-globe-americas me-2"></i><span class="fw-bold">Conservación ambiental</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Contribuyes a la conservación de ecosistemas vitales para el equilibrio ambiental de Costa Rica.</p>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Captura de carbono</li>
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Protección de cuencas</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Conservación de biodiversidad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 h-100 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-info text-white py-3 border-0">
+                        <i class="bi bi-shield-check me-2"></i><span class="fw-bold">Proceso transparente</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Gestión 100% digital con seguimiento en tiempo real y log de auditoría inmutable.</p>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Log de auditoría completo</li>
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Notificaciones por correo</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Dashboard en tiempo real</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 h-100 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-warning text-dark py-3 border-0">
+                        <i class="bi bi-building me-2"></i><span class="fw-bold">Múltiples fincas</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Registra múltiples fincas bajo una sola cuenta, incluso a nombre de terceros.</p>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Sin límite de fincas</li>
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>A nombre de terceros</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Vista consolidada de pagos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 h-100 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-danger text-white py-3 border-0">
+                        <i class="bi bi-universal-access me-2"></i><span class="fw-bold">Accesibilidad WCAG</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Diseñado bajo WCAG 2.1 AA con modo claro/oscuro, fuente OpenDyslexic y tamaño ajustable.</p>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Modo claro y oscuro</li>
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Fuente OpenDyslexic</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Tamaño de texto ajustable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 h-100 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-secondary text-white py-3 border-0">
+                        <i class="bi bi-cloud-arrow-up me-2"></i><span class="fw-bold">Tecnología Azure</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Plataforma .NET 10 con Azure Cloud Storage, mapas Leaflet y datos de OpenWeather.</p>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Azure Cloud Storage</li>
+                            <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Mapas interactivos Leaflet</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>API REST con Swagger</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 5 · ESTADÍSTICAS / IMPACTO -->
+<section class="py-6 psa-stats-section text-white" id="impacto">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-white text-primary px-3 py-2 rounded-pill mb-3">Impacto ambiental</span>
+            <h2 class="display-6 fw-bold text-white">Conservando Costa Rica <span class="text-warning">juntos</span></h2>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="psa-stat-card">
+                    <i class="bi bi-tree-fill fs-1 mb-2 d-block text-success"></i>
+                    <div class="psa-counter fw-bold display-6" data-target="12480">0</div>
+                    <div class="text-white-75 small mt-1">Hectáreas conservadas</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="psa-stat-card">
+                    <i class="bi bi-people-fill fs-1 mb-2 d-block text-info"></i>
+                    <div class="psa-counter fw-bold display-6" data-target="854">0</div>
+                    <div class="text-white-75 small mt-1">Propietarios beneficiados</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="psa-stat-card">
+                    <i class="bi bi-cash-stack fs-1 mb-2 d-block text-warning"></i>
+                    <div class="psa-counter fw-bold display-6" data-target="9600">0</div>
+                    <div class="text-white-75 small mt-1">Pagos procesados</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="psa-stat-card">
+                    <i class="bi bi-droplet-fill fs-1 mb-2 d-block text-primary"></i>
+                    <div class="psa-counter fw-bold display-6" data-target="320">0</div>
+                    <div class="text-white-75 small mt-1">Fuentes de agua protegidas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card bg-white bg-opacity-10 border-0 rounded-4 p-4">
+                    <h6 class="text-white fw-semibold mb-3">
+                        <i class="bi bi-bar-chart-fill me-2 text-warning"></i>Distribución de cobertura vegetal registrada
+                    </h6>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-white-75 small mb-1">
+                            <span><i class="bi bi-circle-fill text-success me-1"></i>Bosque Primario</span><span>42%</span>
+                        </div>
+                        <div class="progress" style="height:8px;border-radius:50px">
+                            <div class="progress-bar bg-success" style="width:42%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-white-75 small mb-1">
+                            <span><i class="bi bi-circle-fill text-info me-1"></i>Bosque Secundario</span><span>31%</span>
+                        </div>
+                        <div class="progress" style="height:8px;border-radius:50px">
+                            <div class="progress-bar bg-info" style="width:31%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between text-white-75 small mb-1">
+                            <span><i class="bi bi-circle-fill text-warning me-1"></i>Plantación / Arbustos</span><span>27%</span>
+                        </div>
+                        <div class="progress" style="height:8px;border-radius:50px">
+                            <div class="progress-bar bg-warning" style="width:27%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 6 · CTA FINAL -->
+<section class="py-6" id="registro">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-md-7 p-5">
+                            <h2 class="fw-bold mb-3">¿Listo para <span class="text-primary">comenzar</span>?</h2>
+                            <p class="text-muted mb-4">
+                                Únete a cientos de propietarios que ya conservan sus tierras y reciben
+                                pagos mensuales. El proceso es completamente en línea y gratuito.
+                            </p>
+                            <div class="d-flex flex-wrap gap-3 mb-4">
+                                <a href="/Register" class="btn btn-primary btn-lg px-4 shadow-sm">
+                                    <i class="bi bi-person-plus me-2"></i>Crear mi cuenta
+                                </a>
+                                <a href="/Login" class="btn btn-outline-secondary btn-lg px-4">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Ya tengo cuenta
+                                </a>
+                            </div>
+                            <div class="d-flex flex-wrap gap-3 text-muted small">
+                                <span><i class="bi bi-shield-check text-success me-1"></i>Verificado por OTP</span>
+                                <span><i class="bi bi-lock text-success me-1"></i>Datos seguros SSL</span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 psa-cta-side d-none d-md-flex align-items-center justify-content-center">
+                            <div class="text-center text-white p-4">
+                                <i class="bi bi-tree-fill display-1 mb-3 d-block"></i>
+                                <p class="fs-5 fw-semibold mb-1">Cada árbol cuenta</p>
+                                <p class="small opacity-75 mb-0">Conservemos Costa Rica juntos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Pages/Landing/project.js" asp-append-version="true"></script>
+}
