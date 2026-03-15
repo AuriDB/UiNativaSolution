@@ -1,3 +1,12 @@
 <Solution>
+  <Folder Name="/DOMAIN/">
+    <Project Path="DOMAIN/Nativa.Domain.csproj" />
+  </Folder>
+  <Folder Name="/INFRASTRUCTURE/">
+    <Project Path="INFRASTRUCTURE/Nativa.Infrastructure.csproj" />
+  </Folder>
   <Project Path="WEB_UI/WEB_UI.csproj" />
+  <Folder Name="/TESTS/">
+    <Project Path="TESTS/Nativa.Tests.csproj" />
+  </Folder>
 </Solution>

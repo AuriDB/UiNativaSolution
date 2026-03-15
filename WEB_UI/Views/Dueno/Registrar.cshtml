@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "Registrar Finca";
+}
+
+<div class="d-flex align-items-center gap-3 mb-4">
+    <a href="/Dueno" class="btn btn-outline-secondary btn-sm rounded-3">
+        <i class="bi bi-arrow-left me-1"></i>Volver
+    </a>
+    <div>
+        <h4 class="fw-bold mb-0"><i class="bi bi-plus-circle text-primary me-2"></i>Registrar nueva finca</h4>
+        <p class="text-muted mb-0 small">Completa los datos del predio para iniciar el proceso PSA.</p>
+    </div>
+</div>
+
+<div id="alertContainer" class="mb-3"></div>
+
+<form id="frmFinca" novalidate>
+    <input type="hidden" id="fincaId" value="0" />
+
+    <div class="row g-4">
+        <!-- Columna datos -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h6 class="fw-bold mb-0"><i class="bi bi-clipboard-data text-primary me-2"></i>Datos de la finca</h6>
+                </div>
+                <div class="card-body px-4 pb-4">
+
+                    <div class="mb-3">
+                        <label for="hectareas" class="form-label fw-semibold small">
+                            <i class="bi bi-rulers me-1 text-primary"></i>Hectáreas <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" id="hectareas" class="form-control rounded-3"
+                               placeholder="Ej: 10.5" step="0.0001" min="0.0001" required />
+                        <div class="form-text">Área total del predio en hectáreas.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">
+                            <i class="bi bi-tree me-1 text-success"></i>Índices ambientales (%)
+                        </label>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <label for="vegetacion" class="form-label small text-muted">Vegetación</label>
+                                <input type="number" id="vegetacion" class="form-control rounded-3"
+                                       placeholder="0.00" step="0.01" min="0" max="100" />
+                            </div>
+                            <div class="col-4">
+                                <label for="hidrologia" class="form-label small text-muted">Hidrología</label>
+                                <input type="number" id="hidrologia" class="form-control rounded-3"
+                                       placeholder="0.00" step="0.01" min="0" max="100" />
+                            </div>
+                            <div class="col-4">
+                                <label for="topografia" class="form-label small text-muted">Topografía</label>
+                                <input type="number" id="topografia" class="form-control rounded-3"
+                                       placeholder="0.00" step="0.01" min="0" max="100" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="esNacional" />
+                            <label class="form-check-label fw-semibold small" for="esNacional">
+                                <i class="bi bi-flag me-1 text-primary"></i>Aplica bono nacional
+                            </label>
+                        </div>
+                        <div class="form-text">Activa el porcentaje adicional por bono nacional en el cálculo de pagos.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">
+                            <i class="bi bi-geo-alt me-1 text-danger"></i>Coordenadas GPS <span class="text-danger">*</span>
+                        </label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label for="lat" class="form-label small text-muted">Latitud</label>
+                                <input type="number" id="lat" class="form-control rounded-3"
+                                       placeholder="9.748917" step="0.000001" required />
+                            </div>
+                            <div class="col-6">
+                                <label for="lng" class="form-label small text-muted">Longitud</label>
+                                <input type="number" id="lng" class="form-control rounded-3"
+                                       placeholder="-83.753428" step="0.000001" required />
+                            </div>
+                        </div>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>Haz clic en el mapa para establecer la ubicación.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna mapa -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h6 class="fw-bold mb-0"><i class="bi bi-map text-primary me-2"></i>Ubicación en el mapa</h6>
+                    <button type="button" id="btnCentrarCR" class="btn btn-outline-secondary btn-sm rounded-3">
+                        <i class="bi bi-geo me-1"></i>Centrar en CR
+                    </button>
+                </div>
+                <div class="card-body p-0">
+                    <div id="mapFinca" style="height:420px;border-radius:0 0 1rem 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a href="/Dueno" class="btn btn-outline-secondary rounded-3">Cancelar</a>
+        <button type="submit" id="btnGuardar" class="btn btn-primary rounded-3 fw-semibold">
+            <i class="bi bi-check-circle me-2"></i>Registrar finca
+        </button>
+    </div>
+</form>
+
+@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+}
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="~/js/Pages/Dueno/finca.js" asp-append-version="true"></script>
+    <script>
+        // Inicializar en modo CREAR (id=0)
+        $(document).ready(() => {
+            const view = new FincaView({ modo: "crear" });
+            view.InitView();
+        });
+    </script>
+}

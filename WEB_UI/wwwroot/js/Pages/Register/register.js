@@ -115,7 +115,7 @@ function RegisterView() {
             success: (res) => {
                 if (res.success) {
                     sessionStorage.setItem("registroCorreo", payload.correo);
-                    window.location.href = "/Register/VerifyOtp";
+                    window.location.href = "/Auth/VerificarOtp";
                 } else {
                     showAlert("alertContainer", res.message || "Error al crear la cuenta.", "danger");
                     this.GoToStep(1);

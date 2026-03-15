@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Cola de Fincas";
+}
+
+<div class="d-flex align-items-center gap-3 mb-4">
+    <div class="flex-fill">
+        <h4 class="fw-bold mb-0"><i class="bi bi-list-ol text-primary me-2"></i>Cola FIFO — Fincas Pendientes</h4>
+        <p class="text-muted mb-0 small">Las fincas se asignan en orden de llegada. La primera es la más antigua.</p>
+    </div>
+    <a href="/Ingeniero/MisAsignadas" class="btn btn-outline-success btn-sm rounded-3">
+        <i class="bi bi-clipboard-check me-1"></i>Mis Asignadas
+    </a>
+    <button id="btnRefrescar" class="btn btn-outline-secondary btn-sm rounded-3">
+        <i class="bi bi-arrow-clockwise me-1"></i>Refrescar
+    </button>
+</div>
+
+<div id="alertContainer" class="mb-3"></div>
+
+<!-- Ag-Grid -->
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+        <div id="gridCola" class="ag-theme-alpine" style="height:520px;width:100%;border-radius:1rem;"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Pages/Ingeniero/cola.js" asp-append-version="true"></script>
+}

@@ -36,10 +36,10 @@
                 </li>
             </ul>
             <div class="d-flex gap-2 flex-wrap">
-                <a href="/Login" class="btn btn-outline-light btn-sm px-3">
+                <a asp-controller="Auth" asp-action="Login" class="btn btn-outline-light btn-sm px-3">
                     <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
                 </a>
-                <a href="/Register" class="btn btn-light btn-sm px-3 text-primary fw-semibold">
+                <a asp-controller="Auth" asp-action="Registro" class="btn btn-light btn-sm px-3 text-primary fw-semibold">
                     <i class="bi bi-person-plus me-1"></i>Registrarse
                 </a>
             </div>
@@ -71,8 +71,8 @@
                 <ul class="list-unstyled mb-0">
                     <li class="mb-1"><a href="/Landing/Project" class="text-white-50 text-decoration-none small"><i class="bi bi-chevron-right me-1"></i>Sobre el programa</a></li>
                     <li class="mb-1"><a href="/Landing/Team" class="text-white-50 text-decoration-none small"><i class="bi bi-chevron-right me-1"></i>Equipo de desarrollo</a></li>
-                    <li class="mb-1"><a href="/Register" class="text-white-50 text-decoration-none small"><i class="bi bi-chevron-right me-1"></i>Crear cuenta</a></li>
-                    <li class="mb-1"><a href="/Login" class="text-white-50 text-decoration-none small"><i class="bi bi-chevron-right me-1"></i>Iniciar sesión</a></li>
+                    <li class="mb-1"><a asp-controller="Auth" asp-action="Registro" class="text-white-50 text-decoration-none small"><i class="bi bi-chevron-right me-1"></i>Crear cuenta</a></li>
+                    <li class="mb-1"><a asp-controller="Auth" asp-action="Login" class="text-white-50 text-decoration-none small"><i class="bi bi-chevron-right me-1"></i>Iniciar sesión</a></li>
                 </ul>
             </div>
             <div class="col-md-4">

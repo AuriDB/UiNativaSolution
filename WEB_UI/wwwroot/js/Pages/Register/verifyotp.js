@@ -112,7 +112,7 @@ function VerifyOtpView() {
                         text:             "Tu cuenta está activa. Ya puedes iniciar sesión.",
                         confirmButtonText: "Iniciar sesión",
                         confirmButtonColor: "#78c2ad"
-                    }).then(() => { window.location.href = "/Login"; });
+                    }).then(() => { window.location.href = "/Auth/Login"; });
                 } else {
                     intentos--;
                     $("#intentosNum").text(intentos);
@@ -189,7 +189,7 @@ function VerifyOtpView() {
             text:             "Has superado el número de intentos. Contacta al soporte para desbloquear tu cuenta.",
             confirmButtonText: "Entendido",
             confirmButtonColor: "#ff7851"
-        }).then(() => { window.location.href = "/Login"; });
+        }).then(() => { window.location.href = "/Auth/Login"; });
     };
 }
 

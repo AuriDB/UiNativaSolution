@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- ASP.NET Core (necesario para DefaultHttpContext, JsonResult, etc. en controller tests) -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!-- Referencias a proyectos del sistema -->
+  <ItemGroup>
+    <ProjectReference Include="..\DOMAIN\Nativa.Domain.csproj" />
+    <ProjectReference Include="..\INFRASTRUCTURE\Nativa.Infrastructure.csproj" />
+    <ProjectReference Include="..\WEB_UI\WEB_UI.csproj" />
+  </ItemGroup>
+
+  <!-- xUnit + runner + SDK -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <!-- EF Core InMemory para tests de integración sin SQL Server -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.5" />
+    <!-- Moq para mocking de dependencias -->
+    <PackageReference Include="Moq" Version="4.20.72" />
+  </ItemGroup>
+
+</Project>
