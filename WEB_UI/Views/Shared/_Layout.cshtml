@@ -13,10 +13,10 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-@inject IHttpContextAccessor Accesor
+@using System.Security.Claims
 @{
-    var userName = Accesor.HttpContext?.Session.GetString("UserName") ?? "Usuario";
-    var userRole = Accesor.HttpContext?.Session.GetString("UserRole") ?? "";
+    var userName = User.FindFirst(ClaimTypes.Name)?.Value ?? "Usuario";
+    var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "";
 }
 
 <!-- NAVBAR AUTENTICADO -->
@@ -86,7 +86,13 @@
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li><a class="dropdown-item" href="/Perfil"><i class="bi bi-person me-2 text-primary"></i>Mi Perfil</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item text-danger" href="/Login/Logout"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                        <li>
+                            <form asp-controller="Auth" asp-action="Logout" method="post" style="margin:0">
+                                <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </li>
             </ul>
