@@ -8,9 +8,14 @@
         <h4 class="fw-bold mb-1"><i class="bi bi-people me-2 text-primary"></i>Gestión de Usuarios</h4>
         <p class="text-muted small mb-0">Administra Dueños e Ingenieros del sistema</p>
     </div>
-    <button id="btnNuevoIngeniero" class="btn btn-primary rounded-3 fw-semibold">
-        <i class="bi bi-person-plus me-1"></i>Crear Ingeniero
-    </button>
+    <div class="d-flex gap-2">
+        <button id="btnNuevoIngeniero" class="btn btn-primary rounded-3 fw-semibold">
+            <i class="bi bi-person-plus me-1"></i>Crear Ingeniero
+        </button>
+        <button id="btnNuevoAdmin" class="btn btn-outline-primary rounded-3 fw-semibold">
+            <i class="bi bi-shield-plus me-1"></i>Crear Admin
+        </button>
+    </div>
 </div>
 
 <div id="alertUsuarios"></div>
@@ -65,6 +70,56 @@
                 <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" id="btnGuardarIngeniero" class="btn btn-primary rounded-3 fw-semibold">
                     <i class="bi bi-check-lg me-1"></i>Crear Ingeniero
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Crear Admin -->
+<div class="modal fade" id="modalNuevoAdmin" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4 border-0">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold"><i class="bi bi-shield-plus me-2 text-primary"></i>Crear Administrador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="alertModalAdmin"></div>
+                <form id="frmNuevoAdmin" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold small">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" id="adNombre" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold small">Apellido 1 <span class="text-danger">*</span></label>
+                            <input type="text" id="adApellido1" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold small">Apellido 2 <span class="text-danger">*</span></label>
+                            <input type="text" id="adApellido2" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">Cédula <span class="text-danger">*</span></label>
+                            <input type="text" id="adCedula" class="form-control rounded-3" placeholder="1-2345-6789" maxlength="12" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">Correo <span class="text-danger">*</span></label>
+                            <input type="email" id="adCorreo" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small">Contraseña temporal <span class="text-danger">*</span></label>
+                            <input type="password" id="adContrasena" class="form-control rounded-3"
+                                   placeholder="Mínimo 6 chars, 1 mayúscula, 1 número, 1 especial" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarAdmin" class="btn btn-primary rounded-3 fw-semibold">
+                    <i class="bi bi-check-lg me-1"></i>Crear Administrador
                 </button>
             </div>
         </div>

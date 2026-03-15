@@ -1,4 +1,3 @@
-using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using WEB_UI.Data;
 using WEB_UI.Models.Entities;
@@ -41,8 +40,18 @@ public class AdminService
     public async Task<(bool ok, string mensaje)> CrearIngenieroAsync(
         string nombre, string apellido1, string apellido2,
         string cedula, string correo, string contrasena)
+        => await CrearSujetoAsync(nombre, apellido1, apellido2, cedula, correo, contrasena, RolEnum.Ingeniero);
+
+    // ── Crear Admin (Admins pueden crear otros Admins) ───────────────────────
+    public async Task<(bool ok, string mensaje)> CrearAdminAsync(
+        string nombre, string apellido1, string apellido2,
+        string cedula, string correo, string contrasena)
+        => await CrearSujetoAsync(nombre, apellido1, apellido2, cedula, correo, contrasena, RolEnum.Admin);
+
+    private async Task<(bool ok, string mensaje)> CrearSujetoAsync(
+        string nombre, string apellido1, string apellido2,
+        string cedula, string correo, string contrasena, RolEnum rol)
     {
-        // Normalizar cédula
         var cedulaStripped = cedula.Replace("-", "").Trim();
         if (cedulaStripped.Length != 9 || !cedulaStripped.All(char.IsDigit))
             return (false, "Cédula inválida. Debe tener 9 dígitos.");
@@ -63,12 +72,13 @@ public class AdminService
             Nombre        = nombreCompleto,
             Correo        = correo.Trim().ToLower(),
             PasswordHash  = hash,
-            Rol           = RolEnum.Ingeniero,
+            Rol           = rol,
             Estado        = EstadoSujetoEnum.Activo,
             FechaCreacion = DateTime.UtcNow
         });
         await _db.SaveChangesAsync();
-        return (true, "Ingeniero creado correctamente.");
+        var rolNombre = rol == RolEnum.Admin ? "Administrador" : "Ingeniero";
+        return (true, $"{rolNombre} creado correctamente.");
     }
 
     // ── CU06 Editar Usuario ──────────────────────────────────────────────────
@@ -103,6 +113,10 @@ public class AdminService
 
         var sujeto = await _db.Sujetos.FindAsync(id);
         if (sujeto is null) return (false, "Usuario no encontrado.");
+
+        // Protección root: el superusuario no se puede inactivar nunca
+        if (sujeto.Cedula == WEB_UI.Data.DataSeeder.RootCedula)
+            return (false, "El usuario root del sistema no puede ser inactivado.");
         if (sujeto.Estado == EstadoSujetoEnum.Inactivo)
             return (false, "El usuario ya está inactivo.");
 

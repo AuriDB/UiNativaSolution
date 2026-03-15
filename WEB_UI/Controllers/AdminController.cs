@@ -39,6 +39,19 @@ public class AdminController : Controller
         return Json(new { success = ok, message = mensaje });
     }
 
+    // ── Crear Admin ──────────────────────────────────────────────────────────
+    [HttpPost("Admin/Usuarios/CrearAdmin")]
+    public async Task<IActionResult> CrearAdmin([FromBody] CrearAdminDto dto)
+    {
+        if (dto is null) return BadRequest(new { success = false, message = "Datos inválidos." });
+
+        var (ok, mensaje) = await _admin.CrearAdminAsync(
+            dto.Nombre, dto.Apellido1, dto.Apellido2,
+            dto.Cedula, dto.Correo, dto.Contrasena);
+
+        return Json(new { success = ok, message = mensaje });
+    }
+
     // ── CU06 Editar Usuario ──────────────────────────────────────────────────
     [HttpPost("Admin/Usuarios/Editar/{id:int}")]
     public async Task<IActionResult> EditarUsuario(int id, [FromBody] EditarUsuarioDto dto)

@@ -19,9 +19,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.HttpOnly = true;
         options.Cookie.SameSite = SameSiteMode.Strict;
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.ExpireTimeSpan  = TimeSpan.FromHours(
-            int.Parse(builder.Configuration["Auth:ExpireHours"] ?? "8"));
-        options.SlidingExpiration = false;
+        options.ExpireTimeSpan    = TimeSpan.FromMinutes(10);
+        options.SlidingExpiration = true;   // se renueva en cada request; expira tras 10 min de inactividad
         options.LoginPath         = "/Auth/Login";
         options.AccessDeniedPath  = "/Auth/AccesoDenegado";
     });
@@ -81,5 +80,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Landing}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+// ── DataSeeder: siembra usuarios de prueba si no existen ─────────────────────
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<NativaDbContext>();
+    await DataSeeder.SeedAsync(db);
+}
 
 app.Run();

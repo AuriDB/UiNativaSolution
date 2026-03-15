@@ -1,44 +1,32 @@
+@using System.Security.Claims
 @{
     ViewData["Title"] = "Dashboard";
+    var userName = User.FindFirstValue(ClaimTypes.Name) ?? "Usuario";
+    var userRole = User.FindFirstValue(ClaimTypes.Role) ?? "";
 }
 
-@inject IHttpContextAccessor Accesor
-@{
-    var userName = Accesor.HttpContext?.Session.GetString("UserName") ?? "Usuario";
-    var userRole = Accesor.HttpContext?.Session.GetString("UserRole") ?? "Dueno";
-}
-
-<!-- Encabezado -->
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
     <div>
-        <h4 class="fw-bold mb-1">
-            <i class="bi bi-speedometer2 text-primary me-2"></i>Dashboard
-        </h4>
+        <h4 class="fw-bold mb-1"><i class="bi bi-speedometer2 text-primary me-2"></i>Dashboard</h4>
         <p class="text-muted mb-0">
             Bienvenido, <strong>@userName</strong> &mdash;
             @DateTime.Now.ToString("dddd, dd MMMM yyyy", new System.Globalization.CultureInfo("es-CR"))
         </p>
     </div>
-    <div>
-        <span class="badge text-bg-primary px-3 py-2 fs-6">
-            <i class="bi bi-person-badge me-1"></i>@userRole
-        </span>
-    </div>
+    <span class="badge text-bg-primary px-3 py-2 fs-6">
+        <i class="bi bi-person-badge me-1"></i>@userRole
+    </span>
 </div>
 
-<!-- Alertas de bienvenida -->
 <div id="alertContainer"></div>
 
-@if (userRole == "Dueno" || userRole == "")
+@if (userRole == "Dueno")
 {
-    <!-- DASHBOARD DUEÑO -->
     <div class="row g-4 mb-4">
         <div class="col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-body d-flex align-items-center gap-3 p-4">
-                    <div class="psa-icon-box bg-primary text-white fs-3 flex-shrink-0">
-                        <i class="bi bi-map-fill"></i>
-                    </div>
+                    <div class="psa-icon-box bg-primary text-white fs-3 flex-shrink-0"><i class="bi bi-map-fill"></i></div>
                     <div>
                         <div class="text-muted small">Mis fincas</div>
                         <div class="fw-bold fs-3" id="statFincas">—</div>
@@ -50,11 +38,9 @@
         <div class="col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-body d-flex align-items-center gap-3 p-4">
-                    <div class="psa-icon-box bg-success text-white fs-3 flex-shrink-0">
-                        <i class="bi bi-check-circle-fill"></i>
-                    </div>
+                    <div class="psa-icon-box bg-success text-white fs-3 flex-shrink-0"><i class="bi bi-check-circle-fill"></i></div>
                     <div>
-                        <div class="text-muted small">Fincas activas</div>
+                        <div class="text-muted small">Fincas aprobadas</div>
                         <div class="fw-bold fs-3" id="statActivas">—</div>
                         <div class="text-muted small">Con plan activo</div>
                     </div>
@@ -64,12 +50,10 @@
         <div class="col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-body d-flex align-items-center gap-3 p-4">
-                    <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0">
-                        <i class="bi bi-cash-coin"></i>
-                    </div>
+                    <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0"><i class="bi bi-cash-coin"></i></div>
                     <div>
                         <div class="text-muted small">Próximo pago</div>
-                        <div class="fw-bold fs-5 text-truncate" id="statProximoPago">—</div>
+                        <div class="fw-bold fs-5" id="statProximoPago">—</div>
                         <div class="text-muted small" id="statFechaPago">—</div>
                     </div>
                 </div>
@@ -78,9 +62,7 @@
         <div class="col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-body d-flex align-items-center gap-3 p-4">
-                    <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0">
-                        <i class="bi bi-clock-history"></i>
-                    </div>
+                    <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0"><i class="bi bi-clock-history"></i></div>
                     <div>
                         <div class="text-muted small">En revisión</div>
                         <div class="fw-bold fs-3" id="statEnRevision">—</div>
@@ -90,29 +72,20 @@
             </div>
         </div>
     </div>
-
     <div class="row g-4">
-        <!-- Mis fincas recientes -->
         <div class="col-lg-7">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-4 px-4">
                     <h6 class="fw-bold mb-0"><i class="bi bi-map text-primary me-2"></i>Mis fincas recientes</h6>
-                    <a href="/Fincas" class="btn btn-sm btn-outline-primary rounded-3">
-                        <i class="bi bi-arrow-right me-1"></i>Ver todas
-                    </a>
+                    <a href="/Dueno/Fincas" class="btn btn-sm btn-outline-primary rounded-3">Ver todas</a>
                 </div>
-                <div class="card-body px-4 pb-4">
-                    <div id="tableFincas">
-                        <div class="text-center py-4 text-muted">
-                            <i class="bi bi-hourglass-split fs-3 mb-2 d-block"></i>
-                            Cargando fincas...
-                        </div>
+                <div class="card-body px-4 pb-4" id="tableFincas">
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-hourglass-split fs-3 mb-2 d-block"></i>Cargando fincas...
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Accesos rápidos -->
         <div class="col-lg-5">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-header bg-transparent border-0 pt-4 px-4">
@@ -120,29 +93,134 @@
                 </div>
                 <div class="card-body px-4 pb-4">
                     <div class="d-grid gap-3">
-                        <a href="/Fincas/Create" class="btn btn-primary rounded-3 text-start d-flex align-items-center gap-3">
+                        <a href="/Dueno/Fincas/Nueva" class="btn btn-primary rounded-3 text-start d-flex align-items-center gap-3">
                             <i class="bi bi-plus-circle fs-4 flex-shrink-0"></i>
-                            <div>
-                                <div class="fw-semibold">Registrar nueva finca</div>
-                                <div class="small opacity-75">Inicia el proceso PSA</div>
-                            </div>
+                            <div><div class="fw-semibold">Registrar nueva finca</div><div class="small opacity-75">Inicia el proceso PSA</div></div>
                         </a>
-                        <a href="/Pagos" class="btn btn-outline-success rounded-3 text-start d-flex align-items-center gap-3">
+                        <a href="/Dueno/Pagos" class="btn btn-outline-success rounded-3 text-start d-flex align-items-center gap-3">
                             <i class="bi bi-receipt fs-4 flex-shrink-0"></i>
-                            <div>
-                                <div class="fw-semibold">Ver historial de pagos</div>
-                                <div class="small opacity-75">Consulta tus comprobantes</div>
-                            </div>
+                            <div><div class="fw-semibold">Historial de pagos</div><div class="small opacity-75">Consulta tus comprobantes</div></div>
                         </a>
-                        <a href="/Perfil" class="btn btn-outline-info rounded-3 text-start d-flex align-items-center gap-3">
-                            <i class="bi bi-person-gear fs-4 flex-shrink-0"></i>
-                            <div>
-                                <div class="fw-semibold">Actualizar perfil</div>
-                                <div class="small opacity-75">Datos personales e IBAN</div>
-                            </div>
+                        <a href="/Dueno/CuentaBancaria" class="btn btn-outline-info rounded-3 text-start d-flex align-items-center gap-3">
+                            <i class="bi bi-bank fs-4 flex-shrink-0"></i>
+                            <div><div class="fw-semibold">Registrar / Actualizar IBAN</div><div class="small opacity-75">Cuenta bancaria para pagos</div></div>
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+}
+else if (userRole == "Ingeniero")
+{
+    <div class="row g-4 mb-4">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0"><i class="bi bi-hourglass-split"></i></div>
+                    <div>
+                        <div class="text-muted small">En cola FIFO</div>
+                        <div class="fw-bold fs-3" id="statCola">—</div>
+                        <div class="text-muted small">Fincas pendientes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0"><i class="bi bi-clipboard-check"></i></div>
+                    <div>
+                        <div class="text-muted small">Mis revisiones</div>
+                        <div class="fw-bold fs-3" id="statEnRevisionIng">—</div>
+                        <div class="text-muted small">Asignadas a mí</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-success text-white fs-3 flex-shrink-0"><i class="bi bi-check2-circle"></i></div>
+                    <div>
+                        <div class="text-muted small">Planes activados</div>
+                        <div class="fw-bold fs-3" id="statPlanes">—</div>
+                        <div class="text-muted small">Por mí</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 text-center">
+            <h6 class="fw-bold text-primary mb-3"><i class="bi bi-lightning-charge me-2 text-warning"></i>Acción rápida</h6>
+            <a href="/Ingeniero/Cola" class="btn btn-primary rounded-3 fw-semibold px-5">
+                <i class="bi bi-list-task me-2"></i>Ir a Cola de Revisión
+            </a>
+        </div>
+    </div>
+}
+else if (userRole == "Admin")
+{
+    <div class="row g-4 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-primary text-white fs-3 flex-shrink-0"><i class="bi bi-people-fill"></i></div>
+                    <div>
+                        <div class="text-muted small">Total usuarios</div>
+                        <div class="fw-bold fs-3" id="statUsuarios">—</div>
+                        <div class="text-muted small">En el sistema</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-success text-white fs-3 flex-shrink-0"><i class="bi bi-person-check-fill"></i></div>
+                    <div>
+                        <div class="text-muted small">Ingenieros activos</div>
+                        <div class="fw-bold fs-3" id="statIngenieros">—</div>
+                        <div class="text-muted small">Disponibles</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0"><i class="bi bi-map-fill"></i></div>
+                    <div>
+                        <div class="text-muted small">Fincas en cola</div>
+                        <div class="fw-bold fs-3" id="statFincasAdmin">—</div>
+                        <div class="text-muted small">Pendientes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-4">
+                    <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0"><i class="bi bi-sliders"></i></div>
+                    <div>
+                        <div class="text-muted small">Parámetros vigentes</div>
+                        <div class="fw-bold small" id="statParams">—</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <h6 class="fw-bold text-primary mb-3"><i class="bi bi-lightning-charge me-2 text-warning"></i>Accesos rápidos</h6>
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="/Admin/Usuarios" class="btn btn-primary rounded-3 fw-semibold">
+                    <i class="bi bi-people me-2"></i>Gestionar Usuarios
+                </a>
+                <a href="/Admin/Parametros" class="btn btn-outline-primary rounded-3 fw-semibold">
+                    <i class="bi bi-sliders me-2"></i>Parámetros de Pago
+                </a>
             </div>
         </div>
     </div>

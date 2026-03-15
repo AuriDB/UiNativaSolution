@@ -110,6 +110,9 @@ $(document).ready(() => {
     // Botón abrir modal nuevo ingeniero
     $("#btnNuevoIngeniero").on("click", () => new bootstrap.Modal("#modalNuevoIngeniero").show());
 
+    // Botón abrir modal nuevo admin
+    $("#btnNuevoAdmin").on("click", () => new bootstrap.Modal("#modalNuevoAdmin").show());
+
     // Guardar nuevo ingeniero
     $("#btnGuardarIngeniero").on("click", () => {
         clearAlert("alertModalIngeniero");
@@ -138,6 +141,37 @@ $(document).ready(() => {
                 } else { showAlert("alertModalIngeniero", res.message, "danger"); }
             },
             error: () => { setLoading("#btnGuardarIngeniero", false); showAlert("alertModalIngeniero", "Error de conexión.", "danger"); }
+        });
+    });
+
+    // Guardar nuevo admin
+    $("#btnGuardarAdmin").on("click", () => {
+        clearAlert("alertModalAdmin");
+        const payload = {
+            nombre:     $("#adNombre").val().trim(),
+            apellido1:  $("#adApellido1").val().trim(),
+            apellido2:  $("#adApellido2").val().trim(),
+            cedula:     $("#adCedula").val().trim(),
+            correo:     $("#adCorreo").val().trim(),
+            contrasena: $("#adContrasena").val()
+        };
+        if (!payload.nombre || !payload.apellido1 || !payload.cedula || !payload.correo || !payload.contrasena) {
+            showAlert("alertModalAdmin", "Completa todos los campos.", "warning");
+            return;
+        }
+        setLoading("#btnGuardarAdmin", true);
+        $.ajax({
+            url: `${API_URL_BASE}/Admin/Usuarios/CrearAdmin`, method: "POST",
+            contentType: "application/json", data: JSON.stringify(payload),
+            success: (res) => {
+                setLoading("#btnGuardarAdmin", false);
+                if (res.success) {
+                    bootstrap.Modal.getInstance("#modalNuevoAdmin").hide();
+                    Swal.fire({ icon: "success", text: res.message });
+                    cargarUsuarios();
+                } else { showAlert("alertModalAdmin", res.message, "danger"); }
+            },
+            error: () => { setLoading("#btnGuardarAdmin", false); showAlert("alertModalAdmin", "Error de conexión.", "danger"); }
         });
     });
 

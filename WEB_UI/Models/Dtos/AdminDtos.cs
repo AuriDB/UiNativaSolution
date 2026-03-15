@@ -13,6 +13,14 @@ public record EditarUsuarioDto(
     string Apellido1,
     string Apellido2);
 
+public record CrearAdminDto(
+    string Nombre,
+    string Apellido1,
+    string Apellido2,
+    string Cedula,
+    string Correo,
+    string Contrasena);
+
 public record CrearParametrosDto(
     decimal PrecioBase,
     decimal PctVegetacion,
