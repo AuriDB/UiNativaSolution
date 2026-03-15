@@ -30,6 +30,15 @@ builder.Services.AddAuthentication("nativa_auth")
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<OtpService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<BlobService>();
+
+// P5 — Cuentas bancarias, cálculo PSA, activación de planes
+builder.Services.AddScoped<BankAccountService>();
+builder.Services.AddScoped<CalculatorService>();
+builder.Services.AddScoped<PlanActivationService>();
+
+// P6 — Ejecución automática de pagos mensuales (background)
+builder.Services.AddHostedService<PaymentHostedService>();
 
 var app = builder.Build();
 

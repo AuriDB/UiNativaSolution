@@ -80,6 +80,10 @@ public class OtpService
             {
                 sujeto.Estado = EstadoSujetoEnum.Bloqueado;
                 sesion.Usada  = true;
+                await _db.SaveChangesAsync();
+                // N03 — notificar bloqueo al usuario
+                try { await _email.EnviarBloqueoOtpAsync(sujeto.Correo!, sujeto.Nombre!); } catch { }
+                return (false, "Código incorrecto. Cuenta bloqueada por seguridad.");
             }
 
             await _db.SaveChangesAsync();

@@ -1,0 +1,118 @@
+@model Nativa.Domain.Entities.Activo
+@{
+    ViewData["Title"] = $"Finca #{Model.Id}";
+}
+
+<div class="d-flex align-items-center gap-3 mb-4">
+    <a href="/Dueno" class="btn btn-outline-secondary btn-sm rounded-3">
+        <i class="bi bi-arrow-left me-1"></i>Mis fincas
+    </a>
+    <div class="flex-fill">
+        <h4 class="fw-bold mb-0"><i class="bi bi-map-fill text-primary me-2"></i>Detalle de finca #@Model.Id</h4>
+        <p class="text-muted mb-0 small">Registrada el <span id="fechaRegistro">@Model.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</span> UTC</p>
+    </div>
+    <span id="badgeEstado" class="badge px-3 py-2 fs-6"></span>
+</div>
+
+<!-- Alertas -->
+<div id="alertContainer" class="mb-3"></div>
+
+<!-- Observaciones del ingeniero (visible si Devuelta) -->
+<div id="panelObservaciones" class="alert alert-warning rounded-3 mb-4 d-none">
+    <i class="bi bi-chat-text me-2"></i>
+    <strong>Motivo de devolución:</strong>
+    <span id="txtObservaciones"></span>
+    <div class="mt-2">
+        <a href="/Dueno/Editar/@Model.Id" class="btn btn-warning btn-sm rounded-3 fw-semibold">
+            <i class="bi bi-pencil me-1"></i>Corregir y reenviar
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <!-- Info general -->
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between">
+                <h6 class="fw-bold mb-0"><i class="bi bi-clipboard-data text-primary me-2"></i>Datos</h6>
+                <div id="btnEditarWrap"></div>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <dl class="row mb-0">
+                    <dt class="col-5 text-muted small">Hectáreas</dt>
+                    <dd class="col-7 fw-semibold" id="dHectareas">—</dd>
+
+                    <dt class="col-5 text-muted small">Vegetación</dt>
+                    <dd class="col-7" id="dVegetacion">—</dd>
+
+                    <dt class="col-5 text-muted small">Hidrología</dt>
+                    <dd class="col-7" id="dHidrologia">—</dd>
+
+                    <dt class="col-5 text-muted small">Topografía</dt>
+                    <dd class="col-7" id="dTopografia">—</dd>
+
+                    <dt class="col-5 text-muted small">Bono nacional</dt>
+                    <dd class="col-7" id="dEsNacional">—</dd>
+
+                    <dt class="col-5 text-muted small">Latitud</dt>
+                    <dd class="col-7" id="dLat">—</dd>
+
+                    <dt class="col-5 text-muted small">Longitud</dt>
+                    <dd class="col-7" id="dLng">—</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mapa (solo lectura) -->
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-bold mb-0"><i class="bi bi-geo-alt text-danger me-2"></i>Ubicación</h6>
+            </div>
+            <div class="card-body p-0">
+                <div id="mapDetalle" style="height:300px;border-radius:0 0 1rem 1rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adjuntos -->
+    <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="bi bi-paperclip text-primary me-2"></i>Adjuntos</h6>
+                <div id="panelSubirAdjunto" class="d-none">
+                    <label class="btn btn-outline-primary btn-sm rounded-3" for="inputAdjunto">
+                        <i class="bi bi-upload me-1"></i>Subir archivo
+                        <input type="file" id="inputAdjunto" class="d-none"
+                               accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" />
+                    </label>
+                </div>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div id="listaAdjuntos">
+                    <div class="text-center text-muted py-3">
+                        <i class="bi bi-hourglass-split fs-3 d-block mb-1"></i>Cargando adjuntos...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+}
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="~/js/Pages/Dueno/detalle.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(() => {
+            const view = new DetalleView(@Model.Id);
+            view.InitView();
+        });
+    </script>
+}

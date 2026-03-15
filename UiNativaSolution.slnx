@@ -6,4 +6,7 @@
     <Project Path="INFRASTRUCTURE/Nativa.Infrastructure.csproj" />
   </Folder>
   <Project Path="WEB_UI/WEB_UI.csproj" />
+  <Folder Name="/TESTS/">
+    <Project Path="TESTS/Nativa.Tests.csproj" />
+  </Folder>
 </Solution>
