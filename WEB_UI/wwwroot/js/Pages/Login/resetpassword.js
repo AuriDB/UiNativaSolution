@@ -57,7 +57,7 @@ function ResetPasswordView() {
                         text:             "Ahora puedes iniciar sesión con tu nueva contraseña.",
                         confirmButtonText: "Ir al login",
                         confirmButtonColor: "#78c2ad"
-                    }).then(() => { window.location.href = "/Login"; });
+                    }).then(() => { window.location.href = "/Auth/Login"; });
                 } else {
                     showAlert("alertContainer", res.message || "El enlace es inválido o ha expirado.", "danger");
                     setLoading("#btnReset", false);

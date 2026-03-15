@@ -1,0 +1,82 @@
+@{
+    Layout = "_Layout_Auth";
+    ViewData["Title"] = "Verificar Cuenta";
+}
+
+<div class="card border-0 shadow-sm rounded-4 psa-auth-card">
+    <div class="card-body p-4 p-md-5">
+        <div class="text-center mb-4">
+            <div class="psa-icon-circle bg-primary text-white mx-auto mb-3">
+                <i class="bi bi-envelope-check-fill"></i>
+            </div>
+            <h4 class="fw-bold mb-1">Verifica tu cuenta</h4>
+            <p class="text-muted small mb-0">
+                Te enviamos un código de <strong>6 dígitos</strong> a tu correo.
+                Ingrésalo antes de que expire.
+            </p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <div class="text-center mb-4">
+            <div id="timerContainer" class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill bg-primary bg-opacity-10">
+                <i class="bi bi-stopwatch text-primary fs-5"></i>
+                <span class="fw-bold text-primary fs-5" id="timerDisplay">01:30</span>
+                <span class="text-muted small">restantes</span>
+            </div>
+            <div id="timerExpired" class="d-none">
+                <span class="badge bg-danger px-3 py-2 rounded-pill">
+                    <i class="bi bi-exclamation-triangle me-1"></i>Código expirado
+                </span>
+            </div>
+        </div>
+
+        <form id="frmOtp" novalidate>
+            <div class="d-flex justify-content-center gap-2 mb-4" id="otpInputs">
+                <input type="text" class="psa-otp-input form-control text-center fw-bold fs-4 rounded-3"
+                       maxlength="1" inputmode="numeric" pattern="[0-9]" data-index="0" />
+                <input type="text" class="psa-otp-input form-control text-center fw-bold fs-4 rounded-3"
+                       maxlength="1" inputmode="numeric" pattern="[0-9]" data-index="1" />
+                <input type="text" class="psa-otp-input form-control text-center fw-bold fs-4 rounded-3"
+                       maxlength="1" inputmode="numeric" pattern="[0-9]" data-index="2" />
+                <input type="text" class="psa-otp-input form-control text-center fw-bold fs-4 rounded-3"
+                       maxlength="1" inputmode="numeric" pattern="[0-9]" data-index="3" />
+                <input type="text" class="psa-otp-input form-control text-center fw-bold fs-4 rounded-3"
+                       maxlength="1" inputmode="numeric" pattern="[0-9]" data-index="4" />
+                <input type="text" class="psa-otp-input form-control text-center fw-bold fs-4 rounded-3"
+                       maxlength="1" inputmode="numeric" pattern="[0-9]" data-index="5" />
+            </div>
+            <input type="hidden" id="otpCompleto" name="otp" />
+
+            <button type="submit" id="btnVerificar"
+                    class="btn btn-primary btn-lg w-100 rounded-3 fw-semibold mb-3" disabled>
+                <i class="bi bi-check-circle me-2"></i>Verificar código
+            </button>
+        </form>
+
+        <div class="text-center">
+            <p class="text-muted small mb-2">¿No recibiste el código?</p>
+            <button id="btnReenviar" class="btn btn-outline-primary btn-sm rounded-3" disabled>
+                <i class="bi bi-arrow-repeat me-1"></i>
+                Reenviar código
+                <span id="cooldownLabel" class="ms-1 d-none">(espera <span id="cooldownTimer">30</span>s)</span>
+            </button>
+            <div class="mt-2">
+                <small class="text-muted" id="intentosLabel">
+                    Intentos restantes: <strong id="intentosNum">3</strong>
+                </small>
+            </div>
+        </div>
+
+        <hr class="my-4" />
+        <p class="text-center text-muted small mb-0">
+            <a href="/Auth/Registro" class="text-primary text-decoration-none">
+                <i class="bi bi-arrow-left me-1"></i>Volver al registro
+            </a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Pages/Register/verifyotp.js" asp-append-version="true"></script>
+}

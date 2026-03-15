@@ -1,24 +1,16 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WEB_UI.Models;
 
-namespace WEB_UI.Controllers
+namespace WEB_UI.Controllers;
+
+[Authorize]
+public class HomeController : Controller
 {
-    public class HomeController : Controller
-    {
-        public IActionResult Index()
-        {
-            // Redirigir al login si no hay sesión
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
-                return RedirectToAction("Index", "Login");
+    public IActionResult Index() => View();
 
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+        => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 }
