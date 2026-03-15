@@ -2,10 +2,10 @@
     ViewData["Title"] = "Dashboard";
 }
 
-@using System.Security.Claims
+@inject IHttpContextAccessor Accesor
 @{
-    var userName = User.FindFirst(ClaimTypes.Name)?.Value ?? "Usuario";
-    var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "";
+    var userName = Accesor.HttpContext?.Session.GetString("UserName") ?? "Usuario";
+    var userRole = Accesor.HttpContext?.Session.GetString("UserRole") ?? "Dueno";
 }
 
 <!-- Encabezado -->

@@ -2,7 +2,7 @@
 //  Sistema Nativa – site.js  (script base compartido)
 // ═══════════════════════════════════════════════════
 
-const API_URL_BASE = ""; // mismo origen — rutas relativas al host MVC
+const API_URL_BASE = "https://localhost:7001/api";
 
 // Mostrar alerta Bootstrap en un contenedor
 function showAlert(containerId, message, type = "danger") {
