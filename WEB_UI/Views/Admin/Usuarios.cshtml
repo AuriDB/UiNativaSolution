@@ -1,0 +1,113 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1"><i class="bi bi-people me-2 text-primary"></i>Gestión de Usuarios</h4>
+        <p class="text-muted small mb-0">Administra Dueños e Ingenieros del sistema</p>
+    </div>
+    <button id="btnNuevoIngeniero" class="btn btn-primary rounded-3 fw-semibold">
+        <i class="bi bi-person-plus me-1"></i>Crear Ingeniero
+    </button>
+</div>
+
+<div id="alertUsuarios"></div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+        <div id="gridUsuarios" class="ag-theme-alpine" style="height: 520px; width: 100%;"></div>
+    </div>
+</div>
+
+<!-- Modal Crear Ingeniero -->
+<div class="modal fade" id="modalNuevoIngeniero" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4 border-0">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold"><i class="bi bi-person-plus me-2 text-primary"></i>Crear Ingeniero</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="alertModalIngeniero"></div>
+                <form id="frmNuevoIngeniero" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold small">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" id="ingNombre" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold small">Apellido 1 <span class="text-danger">*</span></label>
+                            <input type="text" id="ingApellido1" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold small">Apellido 2 <span class="text-danger">*</span></label>
+                            <input type="text" id="ingApellido2" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">Cédula <span class="text-danger">*</span></label>
+                            <input type="text" id="ingCedula" class="form-control rounded-3" placeholder="1-2345-6789" maxlength="12" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">Correo <span class="text-danger">*</span></label>
+                            <input type="email" id="ingCorreo" class="form-control rounded-3" required />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small">Contraseña temporal <span class="text-danger">*</span></label>
+                            <input type="password" id="ingContrasena" class="form-control rounded-3"
+                                   placeholder="Mínimo 6 chars, 1 mayúscula, 1 número, 1 especial" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarIngeniero" class="btn btn-primary rounded-3 fw-semibold">
+                    <i class="bi bi-check-lg me-1"></i>Crear Ingeniero
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Usuario -->
+<div class="modal fade" id="modalEditar" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-4 border-0">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold"><i class="bi bi-pencil me-2"></i>Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="alertModalEditar"></div>
+                <input type="hidden" id="editId" />
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label fw-semibold small">Nombre</label>
+                        <input type="text" id="editNombre" class="form-control rounded-3" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold small">Apellido 1</label>
+                        <input type="text" id="editApellido1" class="form-control rounded-3" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold small">Apellido 2</label>
+                        <input type="text" id="editApellido2" class="form-control rounded-3" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarEditar" class="btn btn-primary rounded-3 fw-semibold">
+                    <i class="bi bi-save me-1"></i>Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
+    <script src="~/js/Pages/Admin/usuarios.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,22 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Historial de Pagos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1"><i class="bi bi-credit-card me-2 text-primary"></i>Historial de Pagos</h4>
+        <p class="text-muted small mb-0">Registro de todos tus pagos del programa Nativa</p>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+        <div id="gridPagos" class="ag-theme-alpine" style="height: 480px; width: 100%;"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
+    <script src="~/js/Pages/Dueno/pagos.js" asp-append-version="true"></script>
+}

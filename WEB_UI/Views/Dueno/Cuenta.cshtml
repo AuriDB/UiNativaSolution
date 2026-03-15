@@ -1,0 +1,93 @@
+@using WEB_UI.Models.Entities
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Cuenta Bancaria";
+    var cuenta = ViewBag.Cuenta as CuentaBancaria;
+}
+
+<div class="mb-4">
+    <h4 class="fw-bold mb-1"><i class="bi bi-bank me-2 text-primary"></i>Cuenta Bancaria</h4>
+    <p class="text-muted small mb-0">Registra o actualiza tu IBAN para recibir los pagos del programa Nativa</p>
+</div>
+
+<div id="alertContainer"></div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        @if (cuenta != null)
+        {
+            <div class="card border-0 shadow-sm rounded-4 mb-4 border-start border-4 border-success">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-success mb-3"><i class="bi bi-check-circle me-2"></i>Cuenta Activa</h6>
+                    <div class="row g-2">
+                        <div class="col-5 text-muted small">Banco:</div>
+                        <div class="col-7 fw-semibold small">@cuenta.Banco</div>
+                        <div class="col-5 text-muted small">Tipo:</div>
+                        <div class="col-7 fw-semibold small">@cuenta.TipoCuenta</div>
+                        <div class="col-5 text-muted small">Titular:</div>
+                        <div class="col-7 fw-semibold small">@cuenta.Titular</div>
+                        <div class="col-5 text-muted small">IBAN:</div>
+                        <div class="col-7 fw-semibold small font-monospace">@cuenta.IbanOfuscado</div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-primary mb-3">
+                    <i class="bi bi-@(cuenta != null ? "pencil" : "plus-circle") me-2"></i>
+                    @(cuenta != null ? "Actualizar Cuenta" : "Registrar Cuenta")
+                </h6>
+
+                <form id="frmCuenta" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Banco <span class="text-danger">*</span></label>
+                        <select name="banco" id="banco" class="form-select rounded-3" required>
+                            <option value="">Selecciona un banco...</option>
+                            <option value="Banco Nacional de Costa Rica">Banco Nacional de Costa Rica</option>
+                            <option value="Banco de Costa Rica">Banco de Costa Rica</option>
+                            <option value="Banco Popular">Banco Popular</option>
+                            <option value="BAC Credomatic">BAC Credomatic</option>
+                            <option value="Banco Davivienda">Banco Davivienda</option>
+                            <option value="Scotiabank">Scotiabank</option>
+                            <option value="Banco Promerica">Banco Promerica</option>
+                            <option value="Coopenae">Coopenae</option>
+                            <option value="Mucap">Mucap</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Tipo de Cuenta <span class="text-danger">*</span></label>
+                        <select name="tipoCuenta" id="tipoCuenta" class="form-select rounded-3" required>
+                            <option value="">Selecciona...</option>
+                            <option value="Corriente">Corriente</option>
+                            <option value="Ahorros">Ahorros</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Titular de la Cuenta <span class="text-danger">*</span></label>
+                        <input type="text" name="titular" id="titular" class="form-control rounded-3"
+                               placeholder="Nombre completo del titular" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold small">IBAN <span class="text-danger">*</span></label>
+                        <input type="text" name="iban" id="iban" class="form-control rounded-3 font-monospace"
+                               placeholder="CR + 20 dígitos (ej: CR21015200009123456789)"
+                               maxlength="22" required />
+                        <div class="form-text text-muted small">
+                            Formato: CR seguido de 20 dígitos numéricos. Total: 22 caracteres.
+                        </div>
+                        <div id="ibanFeedback" class="invalid-feedback"></div>
+                    </div>
+                    <button type="submit" id="btnGuardarCuenta" class="btn btn-primary w-100 rounded-3 fw-semibold">
+                        <i class="bi bi-save me-2"></i>@(cuenta != null ? "Actualizar Cuenta" : "Registrar Cuenta")
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Pages/Dueno/cuenta.js" asp-append-version="true"></script>
+}

@@ -194,4 +194,28 @@ public class ActivoService
     public async Task<CuentaBancaria?> GetCuentaActivaAsync(int duenoId)
         => await _db.CuentasBancarias
             .FirstOrDefaultAsync(c => c.IdDueno == duenoId && c.Activo);
+
+    // ── CU26 Historial Pagos ─────────────────────────────────────────────────
+    public async Task<List<object>> GetPagosHistorialAsync(int duenoId)
+    {
+        return await _db.PagosMensuales
+            .Include(p => p.Plan)
+                .ThenInclude(pl => pl.Activo)
+            .Where(p => p.Plan.Activo.IdDueno == duenoId)
+            .OrderByDescending(p => p.Plan.FechaActivacion)
+            .ThenBy(p => p.NumeroPago)
+            .Select(p => (object)new
+            {
+                p.Id,
+                p.NumeroPago,
+                FincaId       = p.Plan.IdActivo,
+                p.Monto,
+                FechaPago     = p.FechaPago.ToString("dd/MM/yyyy"),
+                FechaEjecucion= p.FechaEjecucion.HasValue
+                                    ? p.FechaEjecucion.Value.ToString("dd/MM/yyyy")
+                                    : "",
+                Estado        = p.Estado.ToString()
+            })
+            .ToListAsync();
+    }
 }

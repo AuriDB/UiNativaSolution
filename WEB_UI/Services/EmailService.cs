@@ -45,7 +45,7 @@ public class EmailService
         await EnviarAsync(destino, asunto, cuerpo);
     }
 
-    public async Task EnviarGenericoAsync(string destino, string asunto, string cuerpoHtml)
+    public virtual async Task EnviarGenericoAsync(string destino, string asunto, string cuerpoHtml)
         => await EnviarAsync(destino, asunto, cuerpoHtml);
 
     private async Task EnviarAsync(string destino, string asunto, string cuerpoHtml)

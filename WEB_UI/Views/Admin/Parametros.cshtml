@@ -1,0 +1,144 @@
+@using WEB_UI.Models.Entities
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Parámetros de Pago";
+    var vigente = ViewBag.Vigente as ParametrosPago;
+}
+
+<div class="mb-4">
+    <h4 class="fw-bold mb-1"><i class="bi bi-sliders me-2 text-primary"></i>Parámetros de Pago PSA</h4>
+    <p class="text-muted small mb-0">Configura los factores de cálculo del programa. Nunca se modifican registros anteriores.</p>
+</div>
+
+<div id="alertParametros"></div>
+
+<div class="row g-4">
+    <!-- Parámetros vigentes -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 border-start border-4 border-success">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-success mb-3"><i class="bi bi-check-circle me-2"></i>Parámetros Vigentes</h6>
+                @if (vigente != null)
+                {
+                    <div class="row g-2 small">
+                        <div class="col-7 text-muted">Precio base:</div>
+                        <div class="col-5 fw-bold">₡@vigente.PrecioBase.ToString("N2")</div>
+                        <div class="col-7 text-muted">% Vegetación:</div>
+                        <div class="col-5 fw-bold">@vigente.PctVegetacion.ToString("P2")</div>
+                        <div class="col-7 text-muted">% Hidrología:</div>
+                        <div class="col-5 fw-bold">@vigente.PctHidrologia.ToString("P2")</div>
+                        <div class="col-7 text-muted">% Nacional:</div>
+                        <div class="col-5 fw-bold">@vigente.PctNacional.ToString("P2")</div>
+                        <div class="col-7 text-muted">% Topografía:</div>
+                        <div class="col-5 fw-bold">@vigente.PctTopografia.ToString("P2")</div>
+                        <div class="col-7 text-muted">Tope SumaPct:</div>
+                        <div class="col-5 fw-bold">@vigente.Tope.ToString("P2")</div>
+                        <div class="col-7 text-muted">Desde:</div>
+                        <div class="col-5 fw-bold small">@vigente.FechaCreacion.ToString("dd/MM/yyyy")</div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted small mb-0">No hay parámetros configurados.</p>
+                }
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 mt-4">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-primary mb-2"><i class="bi bi-calculator me-2"></i>Fórmula</h6>
+                <code class="small d-block bg-light p-3 rounded-3">
+                    SumaPct = PctVeg + PctHid<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; + (EsNac ? PctNac : 0)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; + PctTop<br><br>
+                    Pago = Ha × PrecioBase<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; × (1 + Min(SumaPct, Tope))
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario nuevos parámetros -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-primary mb-3"><i class="bi bi-plus-circle me-2"></i>Nuevos Parámetros</h6>
+                <div class="alert alert-info rounded-3 small">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Opción A:</strong> solo afecta fincas nuevas — planes activos intocables.<br>
+                    <strong>Opción B:</strong> recalcula también los pagos Pendientes de planes activos.
+                </div>
+
+                <form id="frmParametros" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">Precio Base (₡/ha/mes) <span class="text-danger">*</span></label>
+                            <input type="number" id="precioBase" class="form-control rounded-3"
+                                   step="0.01" min="0" placeholder="Ej: 50000.00" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">% Tope SumaPct <span class="text-danger">*</span></label>
+                            <input type="number" id="tope" class="form-control rounded-3"
+                                   step="0.0001" min="0" max="1" placeholder="Ej: 0.5000" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">% Vegetación</label>
+                            <input type="number" id="pctVeg" class="form-control rounded-3"
+                                   step="0.0001" min="0" max="1" placeholder="Ej: 0.1500" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">% Hidrología</label>
+                            <input type="number" id="pctHid" class="form-control rounded-3"
+                                   step="0.0001" min="0" max="1" placeholder="Ej: 0.1000" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">% Bono Nacional</label>
+                            <input type="number" id="pctNac" class="form-control rounded-3"
+                                   step="0.0001" min="0" max="1" placeholder="Ej: 0.0500" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold small">% Topografía</label>
+                            <input type="number" id="pctTop" class="form-control rounded-3"
+                                   step="0.0001" min="0" max="1" placeholder="Ej: 0.0800" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small">Tipo de aplicación <span class="text-danger">*</span></label>
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="opcion" id="opcionA" value="A" checked />
+                                    <label class="form-check-label" for="opcionA">
+                                        <strong>Opción A</strong> — solo fincas nuevas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="opcion" id="opcionB" value="B" />
+                                    <label class="form-check-label" for="opcionB">
+                                        <strong>Opción B</strong> — recalcular pagos Pendientes activos
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" id="btnGuardarParametros" class="btn btn-primary rounded-3 fw-semibold mt-4">
+                        <i class="bi bi-save me-2"></i>Guardar Nuevos Parámetros
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Historial -->
+        <div class="card border-0 shadow-sm rounded-4 mt-4">
+            <div class="card-body p-0">
+                <div class="p-4 pb-0">
+                    <h6 class="fw-bold text-primary mb-0"><i class="bi bi-clock-history me-2"></i>Historial de Parámetros</h6>
+                </div>
+                <div id="gridParametros" class="ag-theme-alpine" style="height: 280px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31.0.3/dist/ag-grid-community.min.js"></script>
+    <script src="~/js/Pages/Admin/parametros.js" asp-append-version="true"></script>
+}

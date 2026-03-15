@@ -15,10 +15,12 @@ public class EncryptionService
         if (_key.Length < 16) _key = Encoding.UTF8.GetBytes("dev_fallback_key_32bytes_here!!!");
     }
 
+    private byte[] KeyBytes() => _key.Length >= 32 ? _key[..32] : _key;
+
     public string Cifrar(string texto)
     {
         using var aes = Aes.Create();
-        aes.Key = _key[..32 <= _key.Length ? 32 : _key.Length];
+        aes.Key = KeyBytes();
         aes.GenerateIV();
         using var enc  = aes.CreateEncryptor();
         var bytes  = Encoding.UTF8.GetBytes(texto);
@@ -33,7 +35,7 @@ public class EncryptionService
     {
         var data = Convert.FromBase64String(cifrado);
         using var aes = Aes.Create();
-        aes.Key = _key[..32 <= _key.Length ? 32 : _key.Length];
+        aes.Key = KeyBytes();
         var iv     = data[..16];
         var cipher = data[16..];
         aes.IV = iv;

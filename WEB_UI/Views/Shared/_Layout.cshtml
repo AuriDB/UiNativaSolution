@@ -39,34 +39,28 @@
                 @if (userRole == "Dueno")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Fincas"><i class="bi bi-map me-1"></i>Mis Fincas</a>
+                        <a class="nav-link" href="/Dueno/Fincas"><i class="bi bi-map me-1"></i>Mis Fincas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Pagos"><i class="bi bi-cash-coin me-1"></i>Mis Pagos</a>
+                        <a class="nav-link" href="/Dueno/Pagos"><i class="bi bi-cash-coin me-1"></i>Mis Pagos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Dueno/CuentaBancaria"><i class="bi bi-bank me-1"></i>Mi IBAN</a>
                     </li>
                 }
                 @if (userRole == "Ingeniero")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Cola"><i class="bi bi-list-task me-1"></i>Cola de Revisión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Evaluaciones"><i class="bi bi-clipboard-check me-1"></i>Mis Evaluaciones</a>
+                        <a class="nav-link" href="/Ingeniero/Cola"><i class="bi bi-list-task me-1"></i>Cola de Revisión</a>
                     </li>
                 }
                 @if (userRole == "Admin")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Usuarios"><i class="bi bi-people me-1"></i>Usuarios</a>
+                        <a class="nav-link" href="/Admin/Usuarios"><i class="bi bi-people me-1"></i>Usuarios</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear me-1"></i>Configuración
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/Parametros"><i class="bi bi-sliders me-2"></i>Parámetros de Pago</a></li>
-                            <li><a class="dropdown-item" href="/Auditoria"><i class="bi bi-journal-text me-2"></i>Log de Auditoría</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Parametros"><i class="bi bi-sliders me-1"></i>Parámetros</a>
                     </li>
                 }
             </ul>

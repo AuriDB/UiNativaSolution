@@ -47,6 +47,18 @@ builder.Services.AddScoped<WEB_UI.Services.OtpService>();
 builder.Services.AddScoped<WEB_UI.Services.EmailService>();
 builder.Services.AddScoped<WEB_UI.Services.AuthService>();
 
+// ── Servicios P3-P5 ───────────────────────────────────────────────────────────
+builder.Services.AddScoped<WEB_UI.Services.EncryptionService>();
+builder.Services.AddScoped<WEB_UI.Services.CalculadoraService>();
+builder.Services.AddScoped<WEB_UI.Services.BlobService>();
+builder.Services.AddScoped<WEB_UI.Services.ExternalApiService>();
+builder.Services.AddScoped<WEB_UI.Services.ActivoService>();
+builder.Services.AddScoped<WEB_UI.Services.IngenieroService>();
+
+// ── Servicios P6-P7 ───────────────────────────────────────────────────────────
+builder.Services.AddScoped<WEB_UI.Services.AdminService>();
+builder.Services.AddHostedService<WEB_UI.Services.PagoHostedService>();
+
 var app = builder.Build();
 
 // ── Pipeline ──────────────────────────────────────────────────────────────────
