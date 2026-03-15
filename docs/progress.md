@@ -6,7 +6,7 @@
 ---
 
 ## P1 — Infraestructura base de datos
-**Estado:** 🔄 En progreso (parcialmente hecho, con bugs críticos)
+**Estado:** ✅ Completo
 
 ### Lo que YA existe (no recrear)
 - ✅ `DOMAIN/` — 8 entidades en español + 4 enums en español
@@ -36,7 +36,7 @@ WEB_UI/
 ---
 
 ## P2 — AuthController (Login, Registro, OTP, Recuperación)
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 ### Casos de uso
 - [ ] CU01 — Registrar Owner + OTP (`POST /Auth/Register`, `POST /Auth/VerifyOtp`)
@@ -54,7 +54,7 @@ WEB_UI/
 ---
 
 ## P3 — DuenoController (Fincas CRUD)
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 ### Casos de uso
 - [ ] CU09/10 — Ver y editar perfil (`GET/POST /Dueno/Perfil`)
@@ -68,7 +68,7 @@ WEB_UI/
 ---
 
 ## P4 — IngenieroController (Cola FIFO + Dictamen)
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 ### Casos de uso
 - [ ] CU17 — Ver cola FIFO (`GET /Ingeniero/Cola`)
@@ -81,7 +81,7 @@ WEB_UI/
 ---
 
 ## P5 — IBAN + Activar Plan de Pagos
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 ### Casos de uso
 - [ ] CU23 — Registrar/actualizar IBAN (`POST /Dueno/CuentaBancaria`)
@@ -95,7 +95,7 @@ WEB_UI/
 ---
 
 ## P6 — PagoHostedService + Historial Pagos
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 ### Casos de uso
 - [ ] CU25 — Pago automático diario (PeriodicTimer)
@@ -110,7 +110,7 @@ WEB_UI/
 ---
 
 ## P7 — AdminController (Usuarios + Parámetros)
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 ### Casos de uso
 - [ ] CU05 — Crear Ingeniero (`POST /Admin/Usuarios/Crear`)
@@ -123,7 +123,7 @@ WEB_UI/
 ---
 
 ## P8 — Notificaciones Email
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 | Código | Evento | Destinatario |
 |---|---|---|
@@ -147,7 +147,7 @@ WEB_UI/
 ---
 
 ## P9 — Tests xUnit
-**Estado:** ⬜ Pendiente
+**Estado:** ✅ Completo
 
 | Test | Descripción |
 |---|---|
@@ -165,3 +165,4 @@ WEB_UI/
 | Fecha | Parte | Descripción |
 |---|---|---|
 | 2026-03-15 | — | Proyecto iniciado. Carpeta docs/ creada. Convenciones definidas. |
+| 2026-03-15 | P1-P9 | Implementación completa P1–P9. Build: 0 errores, 0 warnings. |

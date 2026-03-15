@@ -17,7 +17,7 @@ public class EmailService
     }
 
     // Envía el código OTP al correo del sujeto
-    public async Task EnviarOtpAsync(string correo, string nombre, string otp)
+    public virtual async Task EnviarOtpAsync(string correo, string nombre, string otp)
     {
         var asunto = "Tu código de verificación — Sistema Nativa";
         var cuerpo = $"""
@@ -34,7 +34,7 @@ public class EmailService
     }
 
     // Envía el enlace de restablecimiento de contraseña
-    public async Task EnviarResetPasswordAsync(string correo, string nombre, string resetUrl)
+    public virtual async Task EnviarResetPasswordAsync(string correo, string nombre, string resetUrl)
     {
         var asunto = "Restablecer contraseña — Sistema Nativa";
         var cuerpo = $"""
@@ -53,7 +53,7 @@ public class EmailService
     // ── Notificaciones del sistema (N03–N14) ────────────────────────────────
 
     // N03 — Bloqueo por 3 intentos OTP fallidos
-    public async Task EnviarBloqueoOtpAsync(string correo, string nombre)
+    public virtual async Task EnviarBloqueoOtpAsync(string correo, string nombre)
     {
         await EnviarAsync(correo, "Cuenta bloqueada — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -64,7 +64,7 @@ public class EmailService
     }
 
     // N05 — Finca asignada a ingeniero (pasa a EnRevision)
-    public async Task EnviarFincaEnRevisionAsync(string correo, string nombre, int idFinca)
+    public virtual async Task EnviarFincaEnRevisionAsync(string correo, string nombre, int idFinca)
     {
         await EnviarAsync(correo, $"Tu finca #{idFinca} está en revisión — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -76,7 +76,7 @@ public class EmailService
     }
 
     // N07 — Dictamen: Aprobada
-    public async Task EnviarDictamenAprobadaAsync(string correo, string nombre, int idFinca)
+    public virtual async Task EnviarDictamenAprobadaAsync(string correo, string nombre, int idFinca)
     {
         await EnviarAsync(correo, $"🎉 Tu finca #{idFinca} fue aprobada — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -88,7 +88,7 @@ public class EmailService
     }
 
     // N08 — Dictamen: Rechazada
-    public async Task EnviarDictamenRechazadaAsync(string correo, string nombre, int idFinca, string observaciones)
+    public virtual async Task EnviarDictamenRechazadaAsync(string correo, string nombre, int idFinca, string observaciones)
     {
         await EnviarAsync(correo, $"Tu finca #{idFinca} fue rechazada — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -101,7 +101,7 @@ public class EmailService
     }
 
     // N09 — Dictamen: Devuelta con observaciones
-    public async Task EnviarDictamenDevueltaAsync(string correo, string nombre, int idFinca, string observaciones)
+    public virtual async Task EnviarDictamenDevueltaAsync(string correo, string nombre, int idFinca, string observaciones)
     {
         await EnviarAsync(correo, $"Tu finca #{idFinca} fue devuelta — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -117,7 +117,7 @@ public class EmailService
     }
 
     // N10 — Pago mensual ejecutado
-    public async Task EnviarPagoEjecutadoAsync(
+    public virtual async Task EnviarPagoEjecutadoAsync(
         string correo, string nombre, int numeroPago, decimal monto, DateTime fechaPago)
     {
         await EnviarAsync(correo, $"Pago PSA #{numeroPago} ejecutado — Sistema Nativa", $"""
@@ -137,7 +137,7 @@ public class EmailService
     }
 
     // N12 — Contrato PSA vencido (pago #12 ejecutado)
-    public async Task EnviarContratoVencidoAsync(string correo, string nombre, int idFinca)
+    public virtual async Task EnviarContratoVencidoAsync(string correo, string nombre, int idFinca)
     {
         await EnviarAsync(correo, $"Tu contrato PSA ha finalizado — Finca #{idFinca}", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -149,7 +149,7 @@ public class EmailService
     }
 
     // N13 — Cuenta inactivada por el administrador
-    public async Task EnviarCuentaInactivadaAsync(string correo, string nombre)
+    public virtual async Task EnviarCuentaInactivadaAsync(string correo, string nombre)
     {
         await EnviarAsync(correo, "Tu cuenta ha sido inactivada — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>
@@ -160,7 +160,7 @@ public class EmailService
     }
 
     // N14 — Nuevos parámetros de pago configurados (Opción B)
-    public async Task EnviarParametrosActualizadosAsync(string correo, string nombre)
+    public virtual async Task EnviarParametrosActualizadosAsync(string correo, string nombre)
     {
         await EnviarAsync(correo, "Actualización de parámetros PSA — Sistema Nativa", $"""
             <p>Hola <strong>{nombre}</strong>,</p>

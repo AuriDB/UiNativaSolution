@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Nativa.Infrastructure;
+using WEB_UI.Data;
 using WEB_UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,5 +60,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Landing}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+// Sembrar usuarios de prueba al arrancar (solo si la BD está vacía)
+await DataSeeder.SeedAsync(app);
 
 app.Run();
