@@ -22,6 +22,11 @@ public class IngenieroController : Controller
 
     private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+    // ── Dashboard ────────────────────────────────────────────────────────────
+    [HttpGet("Ingeniero/Dashboard")]
+    public async Task<IActionResult> Dashboard()
+        => Json(await _ing.GetDashboardIngenieroAsync(UserId));
+
     // ── CU17 Cola FIFO ───────────────────────────────────────────────────────
     [Route("Ingeniero/Cola")]
     public IActionResult Cola() => View("~/Views/Ingeniero/Cola.cshtml");

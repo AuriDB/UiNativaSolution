@@ -147,6 +147,19 @@ public class AdminService
         return (true, "Usuario inactivado correctamente.");
     }
 
+    // ── Dashboard Admin ──────────────────────────────────────────────────────
+    public async Task<object> GetDashboardAdminAsync()
+    {
+        var totalUsuarios = await _db.Sujetos.CountAsync();
+        var ingenieros    = await _db.Sujetos.CountAsync(s => s.Rol == RolEnum.Ingeniero && s.Estado == EstadoSujetoEnum.Activo);
+        var fincasEnCola  = await _db.Activos.CountAsync(a => a.Estado == EstadoActivoEnum.Pendiente);
+        var parametros    = await _db.ParametrosPago
+            .Where(p => p.Vigente)
+            .OrderByDescending(p => p.Id)
+            .FirstOrDefaultAsync();
+        return new { totalUsuarios, ingenieros, fincasEnCola, precioBase = parametros?.PrecioBase };
+    }
+
     // ── CU28 Ver Parámetros ──────────────────────────────────────────────────
     public async Task<List<object>> ListarParametrosAsync()
     {

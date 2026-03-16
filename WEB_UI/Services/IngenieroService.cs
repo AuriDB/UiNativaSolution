@@ -151,6 +151,15 @@ public class IngenieroService
         return (true, $"Dictamen '{tipo}' aplicado correctamente.");
     }
 
+    // ── Dashboard Ingeniero ──────────────────────────────────────────────────
+    public async Task<object> GetDashboardIngenieroAsync(int ingenieroId)
+    {
+        var enCola     = await _db.Activos.CountAsync(a => a.Estado == EstadoActivoEnum.Pendiente);
+        var enRevision = await _db.Activos.CountAsync(a => a.IdIngeniero == ingenieroId && a.Estado == EstadoActivoEnum.EnRevision);
+        var planes     = await _db.PlanesPago.CountAsync(p => p.IdIngeniero == ingenieroId);
+        return new { enCola, enRevision, planes };
+    }
+
     // ── CU24 Activar Plan de Pagos ───────────────────────────────────────────
     public async Task<(bool ok, string mensaje)> ActivarPlanAsync(int activoId, int ingenieroId)
     {

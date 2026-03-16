@@ -115,6 +115,15 @@ public class DuenoController : Controller
         return Json(new { success = ok, message = mensaje });
     }
 
+    // ── Dashboard ────────────────────────────────────────────────────────────
+    [HttpGet("Dueno/Dashboard")]
+    public async Task<IActionResult> Dashboard()
+        => Json(await _activo.GetDashboardDuenoAsync(UserId));
+
+    [HttpGet("Dueno/Fincas/Recientes")]
+    public async Task<IActionResult> FincasRecientes()
+        => Json(await _activo.GetFincasRecientesAsync(UserId));
+
     // ── CU26 Historial Pagos ─────────────────────────────────────────────────
     [Route("Dueno/Pagos")]
     public IActionResult Pagos() => View("~/Views/Dueno/Pagos.cshtml");

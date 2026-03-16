@@ -15,8 +15,9 @@
 
 @using System.Security.Claims
 @{
-    var userName = User.FindFirstValue(ClaimTypes.Name) ?? "Usuario";
-    var userRole = User.FindFirstValue(ClaimTypes.Role) ?? "";
+    var userName    = User.FindFirstValue(ClaimTypes.Name) ?? "Usuario";
+    var userRole    = User.FindFirstValue(ClaimTypes.Role) ?? "";
+    var currentPath = ViewContext.HttpContext.Request.Path.Value ?? "";
 }
 
 <!-- NAVBAR AUTENTICADO -->
@@ -32,35 +33,35 @@
         <div class="collapse navbar-collapse" id="navMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/Home">
+                    <a class="nav-link @(currentPath == "/Home" || currentPath == "/" ? "active" : "")" href="/Home">
                         <i class="bi bi-speedometer2 me-1"></i>Dashboard
                     </a>
                 </li>
                 @if (userRole == "Dueno")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Dueno/Fincas"><i class="bi bi-map me-1"></i>Mis Fincas</a>
+                        <a class="nav-link @(currentPath.StartsWith("/Dueno/Fincas") ? "active" : "")" href="/Dueno/Fincas"><i class="bi bi-map me-1"></i>Mis Fincas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Dueno/Pagos"><i class="bi bi-cash-coin me-1"></i>Mis Pagos</a>
+                        <a class="nav-link @(currentPath.StartsWith("/Dueno/Pagos") ? "active" : "")" href="/Dueno/Pagos"><i class="bi bi-cash-coin me-1"></i>Mis Pagos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Dueno/CuentaBancaria"><i class="bi bi-bank me-1"></i>Mi IBAN</a>
+                        <a class="nav-link @(currentPath.StartsWith("/Dueno/CuentaBancaria") ? "active" : "")" href="/Dueno/CuentaBancaria"><i class="bi bi-bank me-1"></i>Mi IBAN</a>
                     </li>
                 }
                 @if (userRole == "Ingeniero")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Ingeniero/Cola"><i class="bi bi-list-task me-1"></i>Cola de Revisión</a>
+                        <a class="nav-link @(currentPath.StartsWith("/Ingeniero/Cola") || currentPath.StartsWith("/Ingeniero/Fincas") ? "active" : "")" href="/Ingeniero/Cola"><i class="bi bi-list-task me-1"></i>Cola de Revisión</a>
                     </li>
                 }
                 @if (userRole == "Admin")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Admin/Usuarios"><i class="bi bi-people me-1"></i>Usuarios</a>
+                        <a class="nav-link @(currentPath.StartsWith("/Admin/Usuarios") ? "active" : "")" href="/Admin/Usuarios"><i class="bi bi-people me-1"></i>Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Admin/Parametros"><i class="bi bi-sliders me-1"></i>Parámetros</a>
+                        <a class="nav-link @(currentPath.StartsWith("/Admin/Parametros") ? "active" : "")" href="/Admin/Parametros"><i class="bi bi-sliders me-1"></i>Parámetros</a>
                     </li>
                 }
             </ul>
@@ -78,7 +79,7 @@
                         <span>@userName</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow">
-                        <li><a class="dropdown-item" href="/Perfil"><i class="bi bi-person me-2 text-primary"></i>Mi Perfil</a></li>
+                        <li><a class="dropdown-item @(currentPath == "/Home/Perfil" ? "active" : "")" href="/Home/Perfil"><i class="bi bi-person me-2 text-primary"></i>Mi Perfil</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item text-danger" href="/Auth/LogoutGet"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
                     </ul>

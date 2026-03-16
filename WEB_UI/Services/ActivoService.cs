@@ -195,6 +195,51 @@ public class ActivoService
         => await _db.CuentasBancarias
             .FirstOrDefaultAsync(c => c.IdDueno == duenoId && c.Activo);
 
+    // ── Dashboard Dueño ──────────────────────────────────────────────────────
+    public async Task<object> GetDashboardDuenoAsync(int duenoId)
+    {
+        var total      = await _db.Activos.CountAsync(a => a.IdDueno == duenoId);
+        var activas    = await _db.Activos.CountAsync(a => a.IdDueno == duenoId && a.Estado == EstadoActivoEnum.Aprobada);
+        var enRevision = await _db.Activos.CountAsync(a => a.IdDueno == duenoId && a.Estado == EstadoActivoEnum.EnRevision);
+
+        var proximo = await _db.PagosMensuales
+            .Where(p => p.Plan.Activo.IdDueno == duenoId && p.Estado == EstadoPagoEnum.Pendiente)
+            .OrderBy(p => p.FechaPago)
+            .Select(p => new { p.Monto, p.FechaPago })
+            .FirstOrDefaultAsync();
+
+        return new
+        {
+            totalFincas      = total,
+            fincasActivas    = activas,
+            fincasEnRevision = enRevision,
+            proximoPago      = proximo == null ? null : (object)new
+            {
+                monto = proximo.Monto,
+                fecha = proximo.FechaPago.ToString("dd/MM/yyyy")
+            }
+        };
+    }
+
+    public async Task<List<object>> GetFincasRecientesAsync(int duenoId, int limit = 5)
+    {
+        var raw = await _db.Activos
+            .Where(a => a.IdDueno == duenoId)
+            .OrderByDescending(a => a.FechaRegistro)
+            .Take(limit)
+            .Select(a => new { a.Id, a.Lat, a.Lng, a.Hectareas, a.Estado })
+            .ToListAsync();
+
+        return raw.Select(a => (object)new
+        {
+            a.Id,
+            Nombre      = $"Finca #{a.Id}",
+            Coordenadas = $"Lat {a.Lat:F4}, Lng {a.Lng:F4}",
+            a.Hectareas,
+            Estado      = a.Estado.ToString()
+        }).ToList();
+    }
+
     // ── CU26 Historial Pagos ─────────────────────────────────────────────────
     public async Task<List<object>> GetPagosHistorialAsync(int duenoId)
     {

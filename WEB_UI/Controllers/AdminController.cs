@@ -15,6 +15,11 @@ public class AdminController : Controller
 
     private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+    // ── Dashboard ────────────────────────────────────────────────────────────
+    [HttpGet("Admin/Dashboard")]
+    public async Task<IActionResult> Dashboard()
+        => Json(await _admin.GetDashboardAdminAsync());
+
     // ── CU08 Ver Usuarios ────────────────────────────────────────────────────
     [Route("Admin/Usuarios")]
     public IActionResult Usuarios() => View("~/Views/Admin/Usuarios.cshtml");
