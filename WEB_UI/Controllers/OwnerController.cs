@@ -34,6 +34,22 @@ namespace WEB_UI.Controllers
             return View();
         }
 
+        public IActionResult PropertyDetail(int? id)
+        {
+            var check = CheckSession();
+            if (check != null) return check;
+            ViewBag.FincaId = id;
+            return View();
+        }
+
+        public IActionResult EditProperty(int? id)
+        {
+            var check = CheckSession();
+            if (check != null) return check;
+            ViewBag.FincaId = id;
+            return View();
+        }
+
         public IActionResult PaymentHistory()
         {
             var check = CheckSession();

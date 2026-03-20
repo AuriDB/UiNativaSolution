@@ -1,5 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    Layout = "_Layout";
+    ViewData["Title"] = "Detalle de Finca";
+    var fincaId = ViewBag.FincaId;
 }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">
+        <i class="bi bi-map text-primary me-2"></i>Detalle de Finca
+    </h4>
+    <a href="/Admin/Properties" class="btn btn-outline-secondary rounded-3">
+        <i class="bi bi-arrow-left me-2"></i>Fincas
+    </a>
+</div>
+
+<div id="alertContainer"></div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-5 text-center">
+        <i class="bi bi-map-fill text-primary" style="font-size: 4rem;"></i>
+        <h5 class="fw-bold mt-3 mb-2">Detalle de Finca</h5>
+        <p class="text-muted">Esta sección está en construcción.</p>
+        <a href="/Admin/Properties" class="btn btn-primary rounded-3 mt-2">
+            <i class="bi bi-arrow-left me-2"></i>Volver a Fincas
+        </a>
+    </div>
+</div>
