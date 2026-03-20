@@ -9,7 +9,9 @@
       "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Admin/**)",
       "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Engineer/**)",
       "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Owner/**)",
-      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/**)"
+      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/**)",
+      "Bash(cat:*)",
+      "Read(//tmp/**)"
     ]
   }
 }
