@@ -1,4 +1,4 @@
-function HomeView() {
+﻿function HomeView() {
 
     this.InitView = () => {
         this.LoadStats();
@@ -7,8 +7,8 @@ function HomeView() {
 
     this.LoadStats = () => {
         $.ajax({
-            url:     `${API_URL_BASE}/Dueno/Dashboard`,
-            method:  "GET",
+            url: `${API_URL_BASE}/Dueno/Dashboard`,
+            method: "GET",
             success: (res) => {
                 if (res.success && res.data) {
                     const d = res.data;
@@ -34,8 +34,8 @@ function HomeView() {
 
     this.LoadFincasRecientes = () => {
         $.ajax({
-            url:     `${API_URL_BASE}/Fincas/Recientes`,
-            method:  "GET",
+            url: `${API_URL_BASE}/Fincas/Recientes`,
+            method: "GET",
             success: (res) => {
                 if (res.success && res.data && res.data.length > 0) {
                     this.RenderTablaFincas(res.data);
@@ -61,14 +61,14 @@ function HomeView() {
 
     this.RenderTablaFincas = (fincas) => {
         const estadoBadge = {
-            "Pendiente":    "secondary",
-            "En Revisión":  "info",
-            "Aprobada":     "success",
-            "Plan Activo":  "primary",
-            "Devuelta":     "warning",
-            "Rechazada":    "danger",
-            "Vencida":      "dark",
-            "Cancelada":    "secondary"
+            "Pendiente": "secondary",
+            "En Revisión": "info",
+            "Aprobada": "success",
+            "Plan Activo": "primary",
+            "Devuelta": "warning",
+            "Rechazada": "danger",
+            "Vencida": "dark",
+            "Cancelada": "secondary"
         };
 
         let rows = fincas.map(f => `
