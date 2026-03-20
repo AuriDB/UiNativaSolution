@@ -30,13 +30,15 @@ $(document).ready(() => {
         clearAlert("alertParametros");
 
         const opcion = $("input[name='opcion']:checked").val();
+        // Los inputs son 0-100; la BD espera 0-1, se divide ÷100
+        const pctToDecimal = id => (parseFloat($(id).val()) || 0) / 100;
         const payload = {
             precioBase:    parseFloat($("#precioBase").val()) || 0,
-            pctVegetacion: parseFloat($("#pctVeg").val()) || 0,
-            pctHidrologia: parseFloat($("#pctHid").val()) || 0,
-            pctNacional:   parseFloat($("#pctNac").val()) || 0,
-            pctTopografia: parseFloat($("#pctTop").val()) || 0,
-            tope:          parseFloat($("#tope").val()) || 0,
+            pctVegetacion: pctToDecimal("#pctVeg"),
+            pctHidrologia: pctToDecimal("#pctHid"),
+            pctNacional:   pctToDecimal("#pctNac"),
+            pctTopografia: pctToDecimal("#pctTop"),
+            tope:          pctToDecimal("#tope"),
             opcion
         };
 
