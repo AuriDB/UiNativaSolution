@@ -1,0 +1,259 @@
+Nativa DataBase
+
+USE NativaDB;
+GO
+
+/*========================
+TABLA ROL
+========================*/
+
+CREATE TABLE Rol(
+    IdRol INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(200),
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+
+
+/*========================
+TABLA USUARIO
+========================*/
+
+CREATE TABLE Usuario(
+    IdUsuario INT IDENTITY(1,1) PRIMARY KEY,
+    IdRol INT NOT NULL,
+    Nombre VARCHAR(150) NOT NULL,
+    Email VARCHAR(150) NOT NULL UNIQUE,
+    Cedula VARCHAR(20) NOT NULL,
+    PasswordHash VARCHAR(500) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1,
+    FechaRegistro DATETIME NOT NULL DEFAULT GETDATE(),
+
+    CONSTRAINT FK_Usuario_Rol
+    FOREIGN KEY(IdRol) REFERENCES Rol(IdRol)
+);
+GO
+
+
+/*========================
+TABLA CUENTA BANCARIA
+========================*/
+
+CREATE TABLE CuentaBancaria(
+    IdCuenta INT IDENTITY(1,1) PRIMARY KEY,
+    IdUsuario INT NOT NULL,
+    IBAN VARCHAR(25) NOT NULL,
+    FechaActualizacion DATETIME NOT NULL DEFAULT GETDATE(),
+    Activo BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Cuenta_Usuario
+    FOREIGN KEY(IdUsuario) REFERENCES Usuario(IdUsuario)
+);
+GO
+
+
+/*========================
+TABLA ESTADO FINCA
+========================*/
+
+CREATE TABLE EstadoFinca(
+    IdEstado INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(200),
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+
+
+/*========================
+TABLA FINCA
+========================*/
+
+CREATE TABLE Finca(
+    IdFinca INT IDENTITY(1,1) PRIMARY KEY,
+    IdUsuario INT NOT NULL,
+    IdEstado INT NOT NULL,
+
+    NumeroFinca VARCHAR(50) NOT NULL UNIQUE,
+
+    Provincia VARCHAR(100) NOT NULL,
+    Canton VARCHAR(100) NOT NULL,
+    Distrito VARCHAR(100) NOT NULL,
+
+    Latitud DECIMAL(10,6),
+    Longitud DECIMAL(10,6),
+
+    Hectareas DECIMAL(10,2) NOT NULL,
+
+    TipoVegetacion VARCHAR(50) NOT NULL,
+    TieneRio BIT NOT NULL,
+    CantidadNacientes INT NOT NULL,
+    TipoTopografia VARCHAR(50) NOT NULL,
+
+    Activa BIT NOT NULL DEFAULT 1,
+    FechaRegistro DATETIME NOT NULL DEFAULT GETDATE(),
+
+    CONSTRAINT FK_Finca_Usuario
+    FOREIGN KEY(IdUsuario) REFERENCES Usuario(IdUsuario),
+
+    CONSTRAINT FK_Finca_Estado
+    FOREIGN KEY(IdEstado) REFERENCES EstadoFinca(IdEstado)
+);
+GO
+
+
+/*========================
+TABLA ADJUNTO FINCA
+========================*/
+
+CREATE TABLE AdjuntoFinca(
+    IdAdjunto INT IDENTITY(1,1) PRIMARY KEY,
+    IdFinca INT NOT NULL,
+    UrlArchivo VARCHAR(500) NOT NULL,
+    TipoArchivo VARCHAR(100),
+    FechaSubida DATETIME NOT NULL DEFAULT GETDATE(),
+    Activo BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Adjunto_Finca
+    FOREIGN KEY(IdFinca) REFERENCES Finca(IdFinca)
+);
+GO
+
+
+/*========================
+TABLA EVALUACION FINCA
+========================*/
+
+CREATE TABLE EvaluacionFinca(
+    IdEvaluacion INT IDENTITY(1,1) PRIMARY KEY,
+    IdFinca INT NOT NULL,
+    IdIngeniero INT NOT NULL,
+    Resultado VARCHAR(50) NOT NULL,
+    Observaciones VARCHAR(500),
+    FechaEvaluacion DATETIME NOT NULL DEFAULT GETDATE(),
+
+    CONSTRAINT FK_Evaluacion_Finca
+    FOREIGN KEY(IdFinca) REFERENCES Finca(IdFinca),
+
+    CONSTRAINT FK_Evaluacion_Ingeniero
+    FOREIGN KEY(IdIngeniero) REFERENCES Usuario(IdUsuario)
+);
+GO
+
+
+/*========================
+TABLA PARAMETRO PAGO
+========================*/
+
+CREATE TABLE ParametroPago(
+    IdParametro INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Porcentaje DECIMAL(5,2) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+
+
+/*========================
+TABLA PLAN DE PAGO
+========================*/
+
+CREATE TABLE PlanPago(
+    IdPlan INT IDENTITY(1,1) PRIMARY KEY,
+    IdFinca INT NOT NULL,
+    FechaInicio DATETIME NOT NULL,
+    FechaFin DATETIME NOT NULL,
+    MontoMensual DECIMAL(12,2) NOT NULL,
+    Estado VARCHAR(50) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Plan_Finca
+    FOREIGN KEY(IdFinca) REFERENCES Finca(IdFinca)
+);
+GO
+
+
+/*========================
+TABLA PAGO
+========================*/
+
+CREATE TABLE Pago(
+    IdPago INT IDENTITY(1,1) PRIMARY KEY,
+    IdPlan INT NOT NULL,
+    NumeroPago INT NOT NULL,
+    FechaProgramada DATETIME NOT NULL,
+    FechaEjecutado DATETIME,
+    Monto DECIMAL(12,2) NOT NULL,
+    Estado VARCHAR(50) NOT NULL,
+
+    CONSTRAINT FK_Pago_Plan
+    FOREIGN KEY(IdPlan) REFERENCES PlanPago(IdPlan)
+);
+GO
+
+
+/*========================
+TABLA AUDITORIA
+========================*/
+
+CREATE TABLE Auditoria(
+    IdAuditoria INT IDENTITY(1,1) PRIMARY KEY,
+    IdUsuario INT,
+    Entidad VARCHAR(100) NOT NULL,
+    ValorAnterior NVARCHAR(MAX),
+    ValorNuevo NVARCHAR(MAX),
+    Fecha DATETIME NOT NULL DEFAULT GETDATE(),
+    IP VARCHAR(50)
+);
+GO
+
+
+/*========================
+TABLA NOTIFICACION
+========================*/
+
+CREATE TABLE Notificacion(
+    IdNotificacion INT IDENTITY(1,1) PRIMARY KEY,
+    IdUsuario INT NOT NULL,
+    Tipo VARCHAR(100),
+    Mensaje VARCHAR(500),
+    FechaEnvio DATETIME NOT NULL DEFAULT GETDATE(),
+    Leida BIT NOT NULL DEFAULT 0,
+
+    CONSTRAINT FK_Notificacion_Usuario
+    FOREIGN KEY(IdUsuario) REFERENCES Usuario(IdUsuario)
+);
+GO
+
+
+/*========================
+INSERTS INICIALES
+========================*/
+
+INSERT INTO Rol (Nombre, Descripcion) VALUES
+('Administrador','Administra el sistema'),
+('Ingeniero','Evalua fincas'),
+('Dueno','Propietario de fincas');
+GO
+
+
+INSERT INTO EstadoFinca (Nombre) VALUES
+('Pendiente'),
+('EnRevision'),
+('Devuelta'),
+('Aprobada'),
+('PlanActivo'),
+('Vencida'),
+('Rechazada'),
+('Cancelada');
+GO
+
+
+INSERT INTO ParametroPago (Nombre, Porcentaje) VALUES
+('BosquePrimario',20),
+('BosqueSecundario',15),
+('Rio',10),
+('Naciente',15),
+('TopografiaInclinada',5);
+GO

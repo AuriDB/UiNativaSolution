@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build)",
+      "Bash(dotnet build --no-restore)",
+      "Bash(grep -l \"En proceso\" \"c:\\\\Users\\\\yorze\\\\OneDrive\\\\Desktop\\\\UiNativaSolution\\\\WEB_UI\\\\Views\\\\Owner\"/*.cshtml \"c:\\\\Users\\\\yorze\\\\OneDrive\\\\Desktop\\\\UiNativaSolution\\\\WEB_UI\\\\Views\\\\Engineer\"/*.cshtml \"c:\\\\Users\\\\yorze\\\\OneDrive\\\\Desktop\\\\UiNativaSolution\\\\WEB_UI\\\\Views\\\\Admin\"/*.cshtml)",
+      "Bash(BASE=\"c:/Users/yorze/OneDrive/Desktop/UiNativaSolution/WEB_UI/Views\")",
+      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Shared/**)",
+      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Admin/**)",
+      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Engineer/**)",
+      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/Owner/**)",
+      "Read(//c/Users/yorze/OneDrive/Desktop/UiNativaSolution/$BASE/**)",
+      "Bash(cat:*)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

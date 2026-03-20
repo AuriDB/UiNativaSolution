@@ -1,0 +1,210 @@
+================================================================================
+  SISTEMA NATIVA — PAGO POR SERVICIOS AMBIENTALES
+  Documento de cambios, novedades y estructura del proyecto
+================================================================================
+
+Elaborado para: Equipo de desarrollo / Revisión académica
+Fecha:          Marzo 2026
+Proyecto:       UiNativaSolution / WEB_UI
+
+
+────────────────────────────────────────────────────────────────────────────────
+1. ARQUITECTURA DEL SISTEMA
+────────────────────────────────────────────────────────────────────────────────
+
+El sistema está compuesto por dos capas separadas:
+
+  [WEB_UI]  ──[HttpClient]──►  [API externa]  ──►  [SQL Server]
+
+  WEB_UI:       Capa de presentación (ASP.NET Core MVC). Solo renderiza vistas
+                y delega toda la lógica de negocio y acceso a datos a la API.
+
+  API externa:  Proyecto separado. Contiene la lógica de negocio, acceso a BD,
+                autenticación, servicios y migraciones. WEB_UI no toca la BD.
+
+  SQL Server:   Base de datos administrada por la API. WEB_UI no la conoce.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2. CONTEXTO — QUÉ HABÍA Y QUÉ SE HIZO
+────────────────────────────────────────────────────────────────────────────────
+
+El proyecto de referencia (UiNativaSolutionMC) tenía implementada solo la capa
+visual: controllers con stubs vacíos, vistas con estructura base y archivos JS
+sin lógica real. La autenticación era temporal basada solo en Session, los
+nombres de rutas estaban en español y no existía integración con API externa.
+
+El trabajo de migración consistió en:
+  a) Normalizar nombres a inglés (convención estándar ASP.NET Core).
+  b) Completar las vistas stub con contenido HTML real.
+  c) Crear los archivos JS faltantes para Owner, Engineer y Admin.
+  d) Dejar los controllers como stubs listos para conectar la API.
+  e) No alterar el trabajo visual ya realizado por el equipo.
+
+
+────────────────────────────────────────────────────────────────────────────────
+3. CAMBIOS RESPECTO AL PROYECTO ORIGINAL
+────────────────────────────────────────────────────────────────────────────────
+
+3.1 NOMBRES DE RUTAS (ESPAÑOL → INGLÉS)
+  Antes:  /Auth/Login, /Auth/Registro, /Dueno/Fincas, /Ingeniero/Cola
+  Ahora:  /Login/Index, /Register/Index, /Owner/PropertyDetail, /Engineer/FifoQueue
+
+  Por qué: Convención estándar ASP.NET Core. Consistencia con la estructura de
+  Views/, Controllers/ y wwwroot/js/ que el equipo ya había creado en inglés.
+
+3.2 CONTROLLERS
+  Antes:  Métodos de acción vacíos sin lógica.
+  Ahora:  Stubs compilables que retornan View() para páginas y
+          Json({success:false, message:"API no configurada."}) para endpoints
+          de datos. Listos para conectar la API cuando esté disponible.
+
+3.3 ARCHIVOS JavaScript
+  Antes:  Apuntaban a rutas en español o URLs hardcodeadas con localhost:7001.
+  Ahora:  Rutas actualizadas a inglés, API_URL_BASE = "" (relativo).
+
+  Archivo site.js:
+    Antes: API_URL_BASE = "https://localhost:7001/api"  (hardcoded)
+    Ahora: API_URL_BASE = ""                            (relativo, cualquier entorno)
+
+3.4 VISTAS STUB COMPLETADAS
+  Las siguientes vistas tenían solo 5-6 líneas vacías y fueron completadas:
+    - Login/Index.cshtml, Login/ForgotPassword.cshtml, Login/ResetPassword.cshtml
+    - Register/Index.cshtml, Register/VerifyOtp.cshtml
+    - Owner/MyProperties.cshtml, Owner/RegisterProperty.cshtml
+    - Owner/PropertyDetail.cshtml, Owner/BankAccount.cshtml
+    - Owner/PaymentHistory.cshtml, Owner/EditProperty.cshtml
+    - Engineer/FifoQueue.cshtml, Engineer/Evaluation.cshtml
+    - Admin/Users.cshtml, Admin/PaymentSettings.cshtml
+
+
+────────────────────────────────────────────────────────────────────────────────
+4. ESTRUCTURA DE CARPETAS — POR QUÉ SE CREÓ CADA UNA
+────────────────────────────────────────────────────────────────────────────────
+
+WEB_UI/
+│
+├── Controllers/
+│   Contiene los 7 controllers MVC. Cada uno define las rutas y acciones de
+│   su módulo. Actualmente son stubs — al conectar la API se reemplaza el
+│   cuerpo de cada acción con llamadas HttpClient.
+│
+│   ├── LandingController.cs   Página pública (sin login requerido).
+│   ├── LoginController.cs     Rutas: /Login/Index, /Login/Logout,
+│   │                          /Login/ForgotPassword, /Login/ResetPassword
+│   ├── RegisterController.cs  Rutas: /Register/Index, /Register/VerifyOtp,
+│   │                          /Register/ResendOtp
+│   ├── HomeController.cs      Redirige al dashboard según el rol en Session.
+│   ├── OwnerController.cs     Todas las rutas /Owner/...
+│   ├── EngineerController.cs  Todas las rutas /Engineer/...
+│   └── AdminController.cs     Todas las rutas /Admin/...
+│
+├── Models/
+│   │
+│   ├── (raíz)                 ViewModels del equipo original. Sin cambios.
+│   │   ErrorViewModel.cs
+│   │
+│   ├── Entities/              Clases POCO que representan las entidades del
+│   │                          dominio. Se usan como ViewModels en vistas que
+│   │                          necesitan tipado fuerte (@model Activo).
+│   │                          Al conectar la API, se usarán para deserializar
+│   │                          las respuestas JSON.
+│   │   Sujeto.cs, Activo.cs, AdjuntoActivo.cs, CuentaBancaria.cs,
+│   │   ParametrosPago.cs, PlanPago.cs, PagoMensual.cs, OtpSesion.cs
+│   │
+│   ├── Enums/                 Enumeraciones del dominio compartidas entre
+│   │                          entidades y vistas (estados, roles).
+│   │   RolEnum.cs, EstadoSujetoEnum.cs, EstadoActivoEnum.cs, EstadoPagoEnum.cs
+│   │
+│   └── Dtos/                  Data Transfer Objects para [FromBody] en los
+│                              controllers. Al conectar la API se usarán como
+│                              cuerpo de las llamadas HttpClient hacia la API.
+│       AuthDtos.cs, FincaDtos.cs, AdminDtos.cs
+│
+├── Views/
+│   Vistas Razor por módulo. No dependen de la API.
+│
+│   ├── Landing/    Página de inicio pública.
+│   ├── Login/      Index, ForgotPassword, ResetPassword.
+│   ├── Register/   Index (registro), VerifyOtp.
+│   ├── Owner/      Dashboard, MyProperties, RegisterProperty, PropertyDetail,
+│   │               BankAccount, PaymentHistory, EditProperty, Profile.
+│   ├── Engineer/   Dashboard, FifoQueue, Evaluation, History, Profile.
+│   ├── Admin/      Dashboard, Users, PaymentSettings, UserDetail, Properties,
+│   │               PropertyDetail, AuditLog, Reports, Profile.
+│   └── Shared/     _Layout.cshtml, _Layout_Auth.cshtml, Error.cshtml,
+│                   _ValidationScriptsPartial.cshtml
+│
+└── wwwroot/
+    ├── css/        Estilos del equipo. Sin cambios.
+    ├── lib/        Bootstrap 5 Minty, AG-Grid 31, Leaflet 1.9, jQuery,
+    │               SweetAlert2. Sin cambios.
+    └── js/
+        └── Pages/
+            ├── Landing/    project.js
+            ├── Login/      login.js, forgotpassword.js, resetpassword.js
+            ├── Register/   register.js, verifyotp.js
+            ├── Owner/      dashboard.js, properties.js, register-property.js,
+            │               property-detail.js, bank-account.js, payment-history.js
+            ├── Engineer/   fifo-queue.js, evaluation.js
+            └── Admin/      users.js, payment-settings.js
+
+  Las carpetas Admin/ y Engineer/ dentro de js/Pages/ se crearon porque el
+  proyecto original no las tenía. Cada vista de esas secciones necesita su
+  propio archivo JS para manejar las tablas AG-Grid, los modales y las llamadas
+  AJAX a los endpoints del controller correspondiente.
+
+
+────────────────────────────────────────────────────────────────────────────────
+5. QUÉ QUEDÓ PENDIENTE (requiere la API)
+────────────────────────────────────────────────────────────────────────────────
+
+Los siguientes puntos no pueden implementarse hasta tener la URL y endpoints
+de la API externa definidos:
+
+  - Lógica real en los controllers (reemplazar stubs con HttpClient calls).
+  - Autenticación: depende de si la API retorna cookie, JWT u otro mecanismo.
+  - Mapeo exacto de rutas de la API a las acciones de los controllers.
+
+Una vez disponible la documentación de la API, el patrón de cada acción será:
+
+  Ejemplo GET:
+    public async Task<IActionResult> PropertiesData()
+    {
+        var resp = await _http.GetAsync($"{_apiBase}/owner/properties");
+        var json = await resp.Content.ReadAsStringAsync();
+        return Content(json, "application/json");
+    }
+
+  Ejemplo POST:
+    public async Task<IActionResult> RegisterProperty([FromBody] object dto)
+    {
+        var resp = await _http.PostAsJsonAsync($"{_apiBase}/owner/properties", dto);
+        var json = await resp.Content.ReadAsStringAsync();
+        return Content(json, "application/json");
+    }
+
+
+────────────────────────────────────────────────────────────────────────────────
+6. DEPENDENCIAS DEL PROYECTO (WEB_UI.csproj)
+────────────────────────────────────────────────────────────────────────────────
+
+  QuestPDF  2025.4.0   Generación de PDFs (para reportes futuros).
+
+  EF Core, BCrypt, Azure Blobs y MailKit pertenecen a la API externa
+  y no están en WEB_UI.
+
+
+────────────────────────────────────────────────────────────────────────────────
+7. TECNOLOGÍAS FRONTEND
+────────────────────────────────────────────────────────────────────────────────
+
+  ASP.NET Core MVC 10   Framework web, routing, Razor views
+  Bootstrap 5 Minty     Estilos y componentes UI
+  jQuery                AJAX y manipulación DOM
+  AG-Grid Community 31  Tablas de datos con paginación y filtros
+  Leaflet 1.9           Mapa interactivo para coordenadas de fincas
+  SweetAlert2           Diálogos de confirmación
+
+
+================================================================================
