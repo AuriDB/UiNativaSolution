@@ -1,7 +1,11 @@
+<<<<<<< HEAD:WEB_UI/wwwroot/js/Pages/Home/home.js
 // ── Dashboard — branching por rol ────────────────────────────────────────────
 // DASHBOARD_ROLE se inyecta desde Index.cshtml @section Scripts
 
 function HomeView() {
+=======
+﻿function HomeView() {
+>>>>>>> 8938498ba942204ca8456128102b364380d3999e:WEB_UI/wwwroot/js/Pages/Owner/dashboard.js
 
     this.InitView = () => {
         const role = (typeof DASHBOARD_ROLE !== "undefined") ? DASHBOARD_ROLE : "";
@@ -13,6 +17,7 @@ function HomeView() {
     // ── Dueño ─────────────────────────────────────────────────────────────────
     this.LoadDuenoDashboard = () => {
         $.ajax({
+<<<<<<< HEAD:WEB_UI/wwwroot/js/Pages/Home/home.js
             url:    `${API_URL_BASE}/Dueno/Dashboard`,
             method: "GET",
             success: (d) => {
@@ -25,6 +30,23 @@ function HomeView() {
                 } else {
                     $("#statProximoPago").text("Sin pagos");
                     $("#statFechaPago").text("—");
+=======
+            url: `${API_URL_BASE}/Dueno/Dashboard`,
+            method: "GET",
+            success: (res) => {
+                if (res.success && res.data) {
+                    const d = res.data;
+                    $("#statFincas").text(d.totalFincas ?? "0");
+                    $("#statActivas").text(d.fincasActivas ?? "0");
+                    $("#statEnRevision").text(d.fincasEnRevision ?? "0");
+                    if (d.proximoPago) {
+                        $("#statProximoPago").text(`₡${Number(d.proximoPago.monto).toLocaleString("es-CR")}`);
+                        $("#statFechaPago").text(d.proximoPago.fecha ?? "—");
+                    } else {
+                        $("#statProximoPago").text("Sin pagos");
+                        $("#statFechaPago").text("—");
+                    }
+>>>>>>> 8938498ba942204ca8456128102b364380d3999e:WEB_UI/wwwroot/js/Pages/Owner/dashboard.js
                 }
             },
             error: () => {
@@ -36,11 +58,19 @@ function HomeView() {
 
     this.LoadFincasRecientes = () => {
         $.ajax({
+<<<<<<< HEAD:WEB_UI/wwwroot/js/Pages/Home/home.js
             url:    `${API_URL_BASE}/Dueno/Fincas/Recientes`,
             method: "GET",
             success: (data) => {
                 if (data && data.length > 0) {
                     this.RenderTablaFincas(data);
+=======
+            url: `${API_URL_BASE}/Fincas/Recientes`,
+            method: "GET",
+            success: (res) => {
+                if (res.success && res.data && res.data.length > 0) {
+                    this.RenderTablaFincas(res.data);
+>>>>>>> 8938498ba942204ca8456128102b364380d3999e:WEB_UI/wwwroot/js/Pages/Owner/dashboard.js
                 } else {
                     $("#tableFincas").html(`
                         <div class="text-center py-4 text-muted">
@@ -63,12 +93,23 @@ function HomeView() {
 
     this.RenderTablaFincas = (fincas) => {
         const estadoBadge = {
+<<<<<<< HEAD:WEB_UI/wwwroot/js/Pages/Home/home.js
             "Pendiente":   "secondary",
             "EnRevision":  "info",
             "Aprobada":    "success",
             "Devuelta":    "warning",
             "Rechazada":   "danger",
             "Vencida":     "dark"
+=======
+            "Pendiente": "secondary",
+            "En Revisión": "info",
+            "Aprobada": "success",
+            "Plan Activo": "primary",
+            "Devuelta": "warning",
+            "Rechazada": "danger",
+            "Vencida": "dark",
+            "Cancelada": "secondary"
+>>>>>>> 8938498ba942204ca8456128102b364380d3999e:WEB_UI/wwwroot/js/Pages/Owner/dashboard.js
         };
 
         const rows = fincas.map(f => `
