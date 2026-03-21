@@ -1,8 +1,4 @@
-// ═══════════════════════════════════════════════════
-//  Sistema Nativa – site.js  (script base compartido)
-// ═══════════════════════════════════════════════════
-
-const API_URL_BASE = "https://localhost:7001/api";
+const API_URL_BASE = "https://nativasolutionback-fkg5f4gef9b8bgaa.canadacentral-01.azurewebsites.net/api";
 
 // Mostrar alerta Bootstrap en un contenedor
 function showAlert(containerId, message, type = "danger") {
