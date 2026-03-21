@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // MVC
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
 
 // Session
 builder.Services.AddDistributedMemoryCache();

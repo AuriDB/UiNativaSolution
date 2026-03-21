@@ -1,14 +1,14 @@
 ﻿@{
     Layout = "_Layout";
     ViewData["Title"] = "Dashboard";
-    var userName = Context.Session.GetString("UserName") ?? "Ingeniero";
+    var userName = Context.Session.GetString("UserName") ?? "Usuario";
 }
 
 <!-- Encabezado -->
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
     <div>
         <h4 class="fw-bold mb-1">
-            <i class="bi bi-speedometer2 text-primary me-2"></i>Dashboard de Productividad
+            <i class="bi bi-speedometer2 text-primary me-2"></i>Mi Dashboard
         </h4>
         <p class="text-muted mb-0">
             Bienvenido, <strong>@userName</strong> &mdash;
@@ -24,27 +24,13 @@
     <div class="col-sm-6 col-lg-3">
         <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body d-flex align-items-center gap-3 p-4">
-                <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0">
-                    <i class="bi bi-list-task"></i>
+                <div class="psa-icon-box bg-primary text-white fs-3 flex-shrink-0">
+                    <i class="bi bi-map-fill"></i>
                 </div>
                 <div>
-                    <div class="text-muted small">Cola disponible</div>
-                    <div class="fw-bold fs-3" id="statCola">—</div>
-                    <div class="text-muted small">Fincas en espera</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-            <div class="card-body d-flex align-items-center gap-3 p-4">
-                <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0">
-                    <i class="bi bi-clipboard-check"></i>
-                </div>
-                <div>
-                    <div class="text-muted small">Asignadas</div>
-                    <div class="fw-bold fs-3" id="statAsignadas">—</div>
-                    <div class="text-muted small">En revisión ahora</div>
+                    <div class="text-muted small">Mis fincas</div>
+                    <div class="fw-bold fs-3" id="statFincas">—</div>
+                    <div class="text-muted small">Registradas</div>
                 </div>
             </div>
         </div>
@@ -56,9 +42,9 @@
                     <i class="bi bi-check-circle-fill"></i>
                 </div>
                 <div>
-                    <div class="text-muted small">Evaluaciones</div>
-                    <div class="fw-bold fs-3" id="statEvaluaciones">—</div>
-                    <div class="text-muted small">Realizadas en total</div>
+                    <div class="text-muted small">Fincas activas</div>
+                    <div class="fw-bold fs-3" id="statActivas">—</div>
+                    <div class="text-muted small">Con plan activo</div>
                 </div>
             </div>
         </div>
@@ -66,13 +52,27 @@
     <div class="col-sm-6 col-lg-3">
         <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body d-flex align-items-center gap-3 p-4">
-                <div class="psa-icon-box bg-primary text-white fs-3 flex-shrink-0">
-                    <i class="bi bi-map-fill"></i>
+                <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0">
+                    <i class="bi bi-cash-coin"></i>
                 </div>
                 <div>
-                    <div class="text-muted small">Hectáreas auditadas</div>
-                    <div class="fw-bold fs-3" id="statHectareas">—</div>
-                    <div class="text-muted small">Acumuladas</div>
+                    <div class="text-muted small">Próximo pago</div>
+                    <div class="fw-bold fs-5" id="statProximoPago">—</div>
+                    <div class="text-muted small" id="statFechaPago">—</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+                <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">En revisión</div>
+                    <div class="fw-bold fs-3" id="statEnRevision">—</div>
+                    <div class="text-muted small">Pendientes de dictamen</div>
                 </div>
             </div>
         </div>
@@ -82,19 +82,19 @@
 <!-- Fila inferior -->
 <div class="row g-4">
 
-    <!-- Fincas asignadas actualmente -->
+    <!-- Fincas recientes -->
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-4 px-4">
                 <h6 class="fw-bold mb-0">
-                    <i class="bi bi-clipboard text-primary me-2"></i>Fincas asignadas actualmente
+                    <i class="bi bi-map text-primary me-2"></i>Mis fincas recientes
                 </h6>
-                <a href="/Engineer/FifoQueue" class="btn btn-sm btn-outline-primary rounded-3">
-                    <i class="bi bi-arrow-right me-1"></i>Ver cola completa
+                <a href="/Owner/MyProperties" class="btn btn-sm btn-outline-primary rounded-3">
+                    <i class="bi bi-arrow-right me-1"></i>Ver todas
                 </a>
             </div>
             <div class="card-body px-4 pb-4">
-                <div id="tablaAsignadas">
+                <div id="tablaFincas">
                     <div class="text-center py-4 text-muted">
                         <i class="bi bi-hourglass-split fs-3 mb-2 d-block"></i>
                         Cargando fincas...
@@ -114,23 +114,31 @@
             </div>
             <div class="card-body px-4 pb-4">
                 <div class="d-grid gap-3">
-                    <a href="/Engineer/FifoQueue"
+                    <a href="/Owner/RegisterProperty"
                        class="btn btn-primary rounded-3 text-start d-flex align-items-center gap-3">
-                        <i class="bi bi-list-task fs-4 flex-shrink-0"></i>
+                        <i class="bi bi-plus-circle fs-4 flex-shrink-0"></i>
                         <div>
-                            <div class="fw-semibold">Ver cola FIFO</div>
-                            <div class="small opacity-75">Tomar nueva solicitud</div>
+                            <div class="fw-semibold">Registrar nueva finca</div>
+                            <div class="small opacity-75">Inicia el proceso PSA</div>
                         </div>
                     </a>
-                    <a href="/Engineer/History"
+                    <a href="/Owner/PaymentHistory"
                        class="btn btn-outline-success rounded-3 text-start d-flex align-items-center gap-3">
-                        <i class="bi bi-clock-history fs-4 flex-shrink-0"></i>
+                        <i class="bi bi-receipt fs-4 flex-shrink-0"></i>
                         <div>
-                            <div class="fw-semibold">Historial de evaluaciones</div>
-                            <div class="small opacity-75">Ver mis dictámenes</div>
+                            <div class="fw-semibold">Historial de pagos</div>
+                            <div class="small opacity-75">Consulta tus comprobantes</div>
                         </div>
                     </a>
-                    <a href="/Engineer/Profile"
+                    <a href="/Owner/BankAccount"
+                       class="btn btn-outline-warning rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-credit-card fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Cuenta bancaria</div>
+                            <div class="small opacity-75">Actualizar IBAN</div>
+                        </div>
+                    </a>
+                    <a href="/Owner/Profile"
                        class="btn btn-outline-info rounded-3 text-start d-flex align-items-center gap-3">
                         <i class="bi bi-person-gear fs-4 flex-shrink-0"></i>
                         <div>
@@ -146,5 +154,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/Pages/Engineer/dashboard.js" asp-append-version="true"></script>
+    <script src="~/js/Pages/Owner/dashboard.js" asp-append-version="true"></script>
 }

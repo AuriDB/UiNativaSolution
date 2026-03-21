@@ -1,0 +1,257 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard Global";
+    var userName = Context.Session.GetString("UserName") ?? "Administrador";
+}
+
+<!-- Encabezado -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
+    <div>
+        <h4 class="fw-bold mb-1">
+            <i class="bi bi-speedometer2 text-primary me-2"></i>Dashboard Global
+        </h4>
+        <p class="text-muted mb-0">
+            Bienvenido, <strong>@userName</strong> &mdash;
+            @DateTime.Now.ToString("dddd, dd MMMM yyyy", new System.Globalization.CultureInfo("es-CR"))
+        </p>
+    </div>
+</div>
+
+<div id="alertContainer"></div>
+
+<!-- KPIs -->
+<div class="row g-4 mb-4">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+                <div class="psa-icon-box bg-primary text-white fs-3 flex-shrink-0">
+                    <i class="bi bi-map-fill"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Fincas activas</div>
+                    <div class="fw-bold fs-3" id="statFincas">—</div>
+                    <div class="text-muted small">En el sistema</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+                <div class="psa-icon-box bg-warning text-dark fs-3 flex-shrink-0">
+                    <i class="bi bi-cash-coin"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Pagos este mes</div>
+                    <div class="fw-bold fs-5" id="statPagos">—</div>
+                    <div class="text-muted small">Ejecutados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+                <div class="psa-icon-box bg-success text-white fs-3 flex-shrink-0">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Usuarios activos</div>
+                    <div class="fw-bold fs-3" id="statUsuarios">—</div>
+                    <div class="text-muted small">En el sistema</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body d-flex align-items-center gap-3 p-4">
+                <div class="psa-icon-box bg-info text-white fs-3 flex-shrink-0">
+                    <i class="bi bi-list-task"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Cola FIFO</div>
+                    <div class="fw-bold fs-3" id="statCola">—</div>
+                    <div class="text-muted small">Fincas en espera</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fila intermedia -->
+<div class="row g-4 mb-4">
+
+    <!-- Fincas por estado -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-bold mb-0">
+                    <i class="bi bi-pie-chart text-primary me-2"></i>Fincas por estado
+                </h6>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div id="listaEstados">
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-hourglass-split fs-3 mb-2 d-block"></i>
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagos por provincia -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-bold mb-0">
+                    <i class="bi bi-geo-alt text-danger me-2"></i>Pagos por provincia
+                </h6>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div id="listaProvincia">
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-hourglass-split fs-3 mb-2 d-block"></i>
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acciones rápidas -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-bold mb-0">
+                    <i class="bi bi-lightning-charge text-warning me-2"></i>Acciones rápidas
+                </h6>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <!-- Se comienza con el registro de los usuarios por parte del Admin *ojo por Eric tambien trabaja en esto verificar conflictos despues* -->
+                <div class="d-grid gap-3">
+                    <a href="/Admin/RegisterAdmin"
+                       class="btn btn-danger rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-person-fill-gear fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Registrar Administrador</div>
+                            <div class="small opacity-75">Crear cuenta de admin</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/RegisterEngineer"
+                       class="btn btn-primary rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-person-badge fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Registrar Ingeniero</div>
+                            <div class="small opacity-75">Crear cuenta de ingeniero</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/Users"
+                       class="btn btn-outline-primary rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-people fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Gestión de usuarios</div>
+                            <div class="small opacity-75">Ver y administrar cuentas</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/Properties"
+                       class="btn btn-outline-success rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-map fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Gestión de fincas</div>
+                            <div class="small opacity-75">Ver y administrar fincas</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/PaymentSettings"
+                       class="btn btn-outline-warning rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-sliders fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Parámetros de pago</div>
+                            <div class="small opacity-75">Precio base y ajustes</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/AuditLog"
+                       class="btn btn-outline-secondary rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-journal-text fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Log de auditoría</div>
+                            <div class="small opacity-75">Historial de eventos</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Fila inferior -->
+<div class="row g-4">
+
+    <!-- Productividad ingenieros -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-4 px-4">
+                <h6 class="fw-bold mb-0">
+                    <i class="bi bi-person-badge text-primary me-2"></i>Productividad de Ingenieros
+                </h6>
+                <a href="/Admin/Users" class="btn btn-sm btn-outline-primary rounded-3">
+                    <i class="bi bi-arrow-right me-1"></i>Ver todos
+                </a>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div id="tablaIngenieros">
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-hourglass-split fs-3 mb-2 d-block"></i>
+                        Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reportes rápidos -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h6 class="fw-bold mb-0">
+                    <i class="bi bi-bar-chart text-success me-2"></i>Reportes
+                </h6>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div class="d-grid gap-3">
+                    <a href="/Admin/Reports"
+                       class="btn btn-outline-success rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-file-earmark-bar-graph fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Reporte de pagos</div>
+                            <div class="small opacity-75">Exportar a CSV</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/Reports"
+                       class="btn btn-outline-info rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-geo fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Montos por geografía</div>
+                            <div class="small opacity-75">Por provincia y cantón</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/Reports"
+                       class="btn btn-outline-secondary rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-calendar3 fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Resumen mensual</div>
+                            <div class="small opacity-75">Consolidado del período</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/Pages/Admin/dashboard.js" asp-append-version="true"></script>
+}

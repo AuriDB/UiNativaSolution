@@ -1,9 +1,9 @@
 function VerifyOtpView() {
 
-    const OTP_SECONDS     = 90;   // vigencia del OTP
-    const COOLDOWN_SECONDS = 30;  // cooldown entre reenvíos
-    const MAX_ATTEMPTS    = 3;
-    const MAX_RESENDS     = 3;
+    const OTP_SECONDS      = 90;
+    const COOLDOWN_SECONDS = 30;
+    const MAX_ATTEMPTS     = 3;
+    const MAX_RESENDS      = 3;
 
     let timerInterval  = null;
     let remaining      = OTP_SECONDS;
@@ -17,7 +17,6 @@ function VerifyOtpView() {
         this.BindEvents();
     };
 
-    // ── Timer countdown ───────────────────────────────
     this.StartTimer = () => {
         remaining = OTP_SECONDS;
         clearInterval(timerInterval);
@@ -43,10 +42,9 @@ function VerifyOtpView() {
         if (intentos > 0) $("#btnReenviar").prop("disabled", false);
     };
 
-    // ── Inputs OTP: focus automático ─────────────────
     this.BindOtpInputs = () => {
         $(".psa-otp-input").on("input", function () {
-            const val   = $(this).val().replace(/\D/g, "");
+            const val = $(this).val().replace(/\D/g, "");
             $(this).val(val);
 
             if (val.length === 1) {
@@ -54,7 +52,6 @@ function VerifyOtpView() {
                 if (next.length) next.focus();
             }
 
-            // Componer código completo
             let otp = "";
             $(".psa-otp-input").each(function () { otp += $(this).val(); });
             $("#otpCompleto").val(otp);
@@ -68,7 +65,6 @@ function VerifyOtpView() {
             }
         });
 
-        // Pegar código completo
         $(".psa-otp-input").on("paste", (e) => {
             e.preventDefault();
             const pasted = (e.originalEvent.clipboardData || window.clipboardData)
@@ -81,13 +77,11 @@ function VerifyOtpView() {
         });
     };
 
-    // ── Eventos ───────────────────────────────────────
     this.BindEvents = () => {
         $("#frmOtp").on("submit", (e) => {
             e.preventDefault();
             this.Verificar();
         });
-
         $("#btnReenviar").on("click", () => this.Reenviar());
     };
 
@@ -99,18 +93,18 @@ function VerifyOtpView() {
         clearAlert("alertContainer");
 
         $.ajax({
-            url:         `${API_URL_BASE}/Auth/VerifyOtp`,
+            url:         "/Register/VerificarOtp",
             method:      "POST",
             contentType: "application/json",
-            data:        JSON.stringify({ correo, otp }),
+            data:        JSON.stringify({ Email: correo, Codigo: otp }),
             success: (res) => {
-                if (res.success) {
+                if (res.result === "ok") {
                     clearInterval(timerInterval);
                     Swal.fire({
-                        icon:             "success",
-                        title:            "¡Cuenta verificada!",
-                        text:             "Tu cuenta está activa. Ya puedes iniciar sesión.",
-                        confirmButtonText: "Iniciar sesión",
+                        icon:              "success",
+                        title:             "\u00a1Cuenta verificada!",
+                        text:              "Tu cuenta esta activa. Ya puedes iniciar sesion.",
+                        confirmButtonText: "Iniciar sesion",
                         confirmButtonColor: "#78c2ad"
                     }).then(() => { window.location.href = "/Login"; });
                 } else {
@@ -124,12 +118,13 @@ function VerifyOtpView() {
                         this.BloquearCuenta();
                     } else {
                         showAlert("alertContainer",
-                            `Código incorrecto. Te quedan <strong>${intentos}</strong> intento(s).`, "danger");
+                            res.message || `Codigo incorrecto. Te quedan <strong>${intentos}</strong> intento(s).`,
+                            "danger");
                     }
                 }
             },
             error: () => {
-                showAlert("alertContainer", "Error de conexión. Intenta de nuevo.", "danger");
+                showAlert("alertContainer", "Error de conexion. Intenta de nuevo.", "danger");
                 setLoading("#btnVerificar", false);
             }
         });
@@ -142,21 +137,24 @@ function VerifyOtpView() {
         const correo = sessionStorage.getItem("registroCorreo") || "";
 
         $.ajax({
-            url:         `${API_URL_BASE}/Auth/ResendOtp`,
+            url:         "/Register/ReenviarOtp",
             method:      "POST",
             contentType: "application/json",
-            data:        JSON.stringify({ correo }),
-            success: () => {
-                // Reiniciar timer de OTP
-                $("#timerContainer").removeClass("d-none");
-                $("#timerExpired").addClass("d-none");
-                $(".psa-otp-input").prop("disabled", false).val("").first().focus();
-                this.StartTimer();
-                showAlert("alertContainer", "Nuevo código enviado a tu correo.", "success");
-                this.StartCooldown();
+            data:        JSON.stringify({ Email: correo }),
+            success: (res) => {
+                if (res.result === "ok") {
+                    $("#timerContainer").removeClass("d-none");
+                    $("#timerExpired").addClass("d-none");
+                    $(".psa-otp-input").prop("disabled", false).val("").first().focus();
+                    this.StartTimer();
+                    showAlert("alertContainer", "Nuevo codigo enviado a tu correo.", "success");
+                    this.StartCooldown();
+                } else {
+                    showAlert("alertContainer", res.message || "No se pudo reenviar el codigo.", "danger");
+                }
             },
             error: () => {
-                showAlert("alertContainer", "No se pudo reenviar el código.", "danger");
+                showAlert("alertContainer", "No se pudo reenviar el codigo.", "danger");
             }
         });
     };
@@ -184,9 +182,9 @@ function VerifyOtpView() {
         $(".psa-otp-input").prop("disabled", true);
         $("#btnReenviar").prop("disabled", true);
         Swal.fire({
-            icon:             "error",
-            title:            "Cuenta bloqueada",
-            text:             "Has superado el número de intentos. Contacta al soporte para desbloquear tu cuenta.",
+            icon:              "error",
+            title:             "Cuenta bloqueada",
+            text:              "Has superado el numero de intentos. Contacta al soporte para desbloquear tu cuenta.",
             confirmButtonText: "Entendido",
             confirmButtonColor: "#ff7851"
         }).then(() => { window.location.href = "/Login"; });

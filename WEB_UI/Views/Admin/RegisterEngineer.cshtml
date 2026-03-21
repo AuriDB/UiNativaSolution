@@ -1,0 +1,112 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Registrar Ingeniero";
+}
+
+<!-- Encabezado -->
+<div class="d-flex align-items-center gap-3 mb-4">
+    <a href="/Admin/Users" class="btn btn-outline-secondary btn-sm rounded-3">
+        <i class="bi bi-arrow-left me-1"></i>Volver
+    </a>
+    <div>
+        <h4 class="fw-bold mb-0">
+            <i class="bi bi-person-badge text-primary me-2"></i>Registrar Ingeniero
+        </h4>
+        <p class="text-muted small mb-0">El usuario quedará activo de inmediato, sin verificación OTP.</p>
+    </div>
+</div>
+
+<div id="alertContainer" class="mb-3"></div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+
+                <!-- Campo oculto con el rol -->
+                <input type="hidden" id="idRol" value="2" />
+
+                <form id="frmRegistroInterno" novalidate>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" id="nombre" class="form-control rounded-3"
+                                   placeholder="Ej: María" maxlength="80" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Primer Apellido <span class="text-danger">*</span></label>
+                            <input type="text" id="primerApellido" class="form-control rounded-3"
+                                   placeholder="Ej: González" maxlength="80" required />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Segundo Apellido</label>
+                            <input type="text" id="segundoApellido" class="form-control rounded-3"
+                                   placeholder="Ej: Vargas" maxlength="80" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Cédula <span class="text-danger">*</span></label>
+                            <input type="text" id="cedula" class="form-control rounded-3"
+                                   placeholder="Ej: 2-0000-0000" maxlength="12" required />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Correo electrónico <span class="text-danger">*</span></label>
+                            <input type="email" id="email" class="form-control rounded-3"
+                                   placeholder="ingeniero@nativa.cr" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Contraseña <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="password" id="password" class="form-control rounded-start-3"
+                                       placeholder="Contraseña segura" required />
+                                <button type="button" id="btnTogglePwd"
+                                        class="btn btn-outline-secondary rounded-end-3" tabindex="-1">
+                                    <i class="bi bi-eye" id="eyePwd"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Confirmar contraseña <span class="text-danger">*</span></label>
+                            <input type="password" id="confirmarPassword" class="form-control rounded-3"
+                                   placeholder="Repite la contraseña" required />
+                        </div>
+                    </div>
+
+                    <!-- Requisitos de contraseña -->
+                    <div class="card border-0 bg-light rounded-3 p-3 mb-4 small">
+                        <div class="fw-semibold mb-2 text-muted">Requisitos de contraseña:</div>
+                        <div class="row g-1">
+                            <div class="col-6" id="req-len">    <i class="bi bi-x-circle me-1 text-danger"></i>Mínimo 6 caracteres</div>
+                            <div class="col-6" id="req-upper">  <i class="bi bi-x-circle me-1 text-danger"></i>Una mayúscula</div>
+                            <div class="col-6" id="req-lower">  <i class="bi bi-x-circle me-1 text-danger"></i>Una minúscula</div>
+                            <div class="col-6" id="req-num">    <i class="bi bi-x-circle me-1 text-danger"></i>Un número</div>
+                            <div class="col-6" id="req-special"><i class="bi bi-x-circle me-1 text-danger"></i>Un carácter especial</div>
+                            <div class="col-6" id="req-space">  <i class="bi bi-x-circle me-1 text-danger"></i>Sin espacios</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <a href="/Admin/Users" class="btn btn-outline-secondary rounded-3 px-4">Cancelar</a>
+                        <button type="submit" id="btnRegistrar" class="btn btn-primary rounded-3 px-4 fw-semibold">
+                            <i class="bi bi-person-plus-fill me-2"></i>Registrar Ingeniero
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Pages/Admin/registerInterno.js" asp-append-version="true"></script>
+}

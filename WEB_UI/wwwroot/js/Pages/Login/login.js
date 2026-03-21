@@ -12,6 +12,8 @@ function LoginView() {
         });
     };
 
+    // El login va por el MVC controller para poder establecer la sesion server-side.
+    // LoginController.Authenticate llama al API, setea la sesion y retorna { result: "ok" }
     this.Login = () => {
         const correo     = $("#correo").val().trim();
         const contrasena = $("#contrasena").val();
@@ -25,12 +27,12 @@ function LoginView() {
         clearAlert("alertContainer");
 
         $.ajax({
-            url:         `${API_URL_BASE}/Auth/Login`,
+            url:         "/Login/Authenticate",
             method:      "POST",
             contentType: "application/json",
-            data:        JSON.stringify({ correo, contrasena }),
+            data:        JSON.stringify({ Email: correo, Password: contrasena }),
             success: (res) => {
-                if (res.success) {
+                if (res.result === "ok") {
                     window.location.href = "/Home";
                 } else {
                     showAlert("alertContainer", res.message || "Credenciales incorrectas.", "danger");
@@ -38,7 +40,7 @@ function LoginView() {
                 }
             },
             error: () => {
-                showAlert("alertContainer", "Error de conexión. Intenta de nuevo.", "danger");
+                showAlert("alertContainer", "Error de conexion. Intenta de nuevo.", "danger");
                 setLoading("#btnLogin", false);
             }
         });

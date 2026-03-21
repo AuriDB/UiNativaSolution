@@ -2,13 +2,13 @@
 
 namespace WEB_UI.Controllers
 {
-    public class EngineerController : Controller
+    public class OwnerController : Controller
     {
         private IActionResult? CheckSession()
         {
             //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
             //    return RedirectToAction("Index", "Login");
-            //if (HttpContext.Session.GetString("UserRole") != "Ingeniero")
+            //if (HttpContext.Session.GetString("UserRole") != "Dueno")
             //    return RedirectToAction("Index", "Home");
             return null;
         }
@@ -20,22 +20,28 @@ namespace WEB_UI.Controllers
             return View();
         }
 
-        public IActionResult FifoQueue()
+        public IActionResult MyProperties()
         {
             var check = CheckSession();
             if (check != null) return check;
             return View();
         }
 
-        public IActionResult Evaluation(int? id)
+        public IActionResult RegisterProperty()
         {
             var check = CheckSession();
             if (check != null) return check;
-            ViewBag.FincaId = id;
             return View();
         }
 
-        public IActionResult History()
+        public IActionResult PaymentHistory()
+        {
+            var check = CheckSession();
+            if (check != null) return check;
+            return View();
+        }
+
+        public IActionResult BankAccount()
         {
             var check = CheckSession();
             if (check != null) return check;
