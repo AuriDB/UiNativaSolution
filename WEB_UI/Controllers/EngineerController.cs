@@ -31,6 +31,10 @@ namespace WEB_UI.Controllers
         {
             var check = CheckSession();
             if (check != null) return check;
+
+            if (id == null)
+                return RedirectToAction("FifoQueue");
+
             ViewBag.FincaId = id;
             return View();
         }

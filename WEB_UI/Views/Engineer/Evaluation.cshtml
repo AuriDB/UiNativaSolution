@@ -1,5 +1,170 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Evaluación";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var fincaId = ViewBag.FincaId;
 }
+
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
+        <div>
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-clipboard-check text-primary me-2"></i>Evaluación de Solicitud
+            </h4>
+            <p class="text-muted mb-0">Revisión técnica de la finca #@fincaId</p>
+        </div>
+        <a asp-controller="Engineer" asp-action="FifoQueue" class="btn btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i>Volver a Cola FIFO
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Columna principal -->
+        <div class="col-lg-8">
+            <!-- Información general -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-house-door me-2 text-success"></i>Información General
+                    </h5>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Nombre de la finca</label>
+                            <input type="text" class="form-control rounded-3" value="Finca La Esperanza" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Propietario</label>
+                            <input type="text" class="form-control rounded-3" value="María Gómez" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Ubicación</label>
+                            <input type="text" class="form-control rounded-3" value="San Carlos, Alajuela" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Extensión</label>
+                            <input type="text" class="form-control rounded-3" value="12.5 hectáreas" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información ambiental -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-tree me-2 text-success"></i>Información Ambiental
+                    </h5>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Cobertura forestal</label>
+                            <input type="text" class="form-control rounded-3" value="Bosque secundario" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Fuentes hídricas</label>
+                            <input type="text" class="form-control rounded-3" value="Sí" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Topografía</label>
+                            <input type="text" class="form-control rounded-3" value="Inclinada" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Cantidad de nacientes</label>
+                            <input type="text" class="form-control rounded-3" value="2" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Estado actual</label>
+                            <input type="text" class="form-control rounded-3" value="Pendiente de revisión" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-pencil-square me-2 text-warning"></i>Criterio del Ingeniero
+                    </h5>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Observaciones técnicas</label>
+                        <textarea class="form-control rounded-3" rows="6" placeholder="Ingrese aquí las observaciones técnicas de la evaluación..."></textarea>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-success rounded-3">
+                            <i class="bi bi-check-circle me-1"></i>Aprobar
+                        </button>
+
+                        <button class="btn btn-danger rounded-3">
+                            <i class="bi bi-x-circle me-1"></i>Rechazar
+                        </button>
+
+                        <button class="btn btn-warning text-dark rounded-3">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i>Devolver
+                        </button>
+
+                        <a asp-controller="Engineer" asp-action="FifoQueue" class="btn btn-outline-secondary rounded-3">
+                            Cancelar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna lateral -->
+        <div class="col-lg-4">
+            <!-- Resumen -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-info-circle me-2 text-primary"></i>Resumen de Solicitud
+                    </h5>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Número de solicitud</small>
+                        <span class="fw-semibold">#@fincaId</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Fecha de ingreso</small>
+                        <span class="fw-semibold">21/03/2026</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Prioridad</small>
+                        <span class="badge bg-warning text-dark rounded-pill">Media</span>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">Estado</small>
+                        <span class="badge bg-primary rounded-pill">En evaluación</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documentos -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-folder2-open me-2 text-secondary"></i>Documentos Adjuntos
+                    </h5>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0">
+                            <i class="bi bi-file-earmark-pdf text-danger me-2"></i>Plano catastrado.pdf
+                        </li>
+                        <li class="list-group-item px-0">
+                            <i class="bi bi-file-earmark-image text-success me-2"></i>Foto_finca_1.jpg
+                        </li>
+                        <li class="list-group-item px-0">
+                            <i class="bi bi-file-earmark-text text-primary me-2"></i>Declaracion_ambiental.pdf
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
