@@ -145,7 +145,7 @@
     align-items:   center;
     justify-content: center;
     padding:       2rem 1rem;
-    overflow:      hidden;
+    overflow-y:    auto;
     position:      relative;
 }
 

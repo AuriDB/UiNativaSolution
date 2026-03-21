@@ -44,20 +44,20 @@
                                placeholder="Ej: Juan" required />
                     </div>
                     <div class="col-md-6">
-                        <label for="apellido1" class="form-label fw-semibold small">
-                            <i class="bi bi-person me-1 text-primary"></i>Apellido 1
+                        <label for="primerApellido" class="form-label fw-semibold small">
+                            <i class="bi bi-person me-1 text-primary"></i>Primer Apellido
                         </label>
-                        <input type="text" id="apellido1" name="apellido1"
+                        <input type="text" id="primerApellido" name="primerApellido"
                                class="form-control rounded-3"
                                placeholder="Ej: Pérez" required />
                     </div>
                     <div class="col-md-6">
-                        <label for="apellido2" class="form-label fw-semibold small">
-                            <i class="bi bi-person me-1 text-primary"></i>Apellido 2
+                        <label for="segundoApellido" class="form-label fw-semibold small">
+                            <i class="bi bi-person me-1 text-primary"></i>Segundo Apellido
                         </label>
-                        <input type="text" id="apellido2" name="apellido2"
+                        <input type="text" id="segundoApellido" name="segundoApellido"
                                class="form-control rounded-3"
-                               placeholder="Ej: González" required />
+                               placeholder="Ej: González" />
                     </div>
                     <div class="col-12">
                         <label for="cedula" class="form-label fw-semibold small">
@@ -120,6 +120,7 @@
                         <div class="col-6"><small id="req-lower"   class="text-muted"><i class="bi bi-x-circle me-1"></i>Una minúscula</small></div>
                         <div class="col-6"><small id="req-num"     class="text-muted"><i class="bi bi-x-circle me-1"></i>Un número</small></div>
                         <div class="col-6"><small id="req-special" class="text-muted"><i class="bi bi-x-circle me-1"></i>Un carácter especial</small></div>
+                        <div class="col-6"><small id="req-space"   class="text-muted"><i class="bi bi-x-circle me-1"></i>Sin espacios</small></div>
                         <div class="col-6"><small id="req-noname"  class="text-muted"><i class="bi bi-x-circle me-1"></i>Sin tu nombre</small></div>
                     </div>
                 </div>
@@ -150,10 +151,10 @@
                     <div class="row g-2">
                         <div class="col-5 text-muted small">Nombre:</div>
                         <div class="col-7 fw-semibold small" id="resumeNombre">—</div>
-                        <div class="col-5 text-muted small">Apellido 1:</div>
-                        <div class="col-7 fw-semibold small" id="resumeApellido1">—</div>
-                        <div class="col-5 text-muted small">Apellido 2:</div>
-                        <div class="col-7 fw-semibold small" id="resumeApellido2">—</div>
+                        <div class="col-5 text-muted small">Primer Apellido:</div>
+                        <div class="col-7 fw-semibold small" id="resumePrimerApellido">—</div>
+                        <div class="col-5 text-muted small">Segundo Apellido:</div>
+                        <div class="col-7 fw-semibold small" id="resumeSegundoApellido">—</div>
                         <div class="col-5 text-muted small">Cédula:</div>
                         <div class="col-7 fw-semibold small" id="resumeCedula">—</div>
                         <div class="col-5 text-muted small">Correo:</div>
@@ -185,6 +186,58 @@
             ¿Ya tienes cuenta?
             <a href="/Login" class="text-primary fw-semibold text-decoration-none">Iniciar sesión</a>
         </p>
+    </div>
+</div>
+
+<!-- Modal OTP -->
+<div class="modal fade" id="modalOtp" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modalOtpLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <div class="w-100 text-center pt-2">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-2" style="width:56px;height:56px;">
+                        <i class="bi bi-envelope-check fs-4 text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0" id="modalOtpLabel">Verifica tu correo</h5>
+                    <p class="text-muted small mt-1 mb-0">Ingresa el código de 6 dígitos enviado a</p>
+                    <p class="fw-semibold small text-primary mb-0" id="otpEmailDisplay"></p>
+                </div>
+            </div>
+            <div class="modal-body px-4 pt-3 pb-2">
+                <div id="otpAlertContainer" class="mb-2"></div>
+
+                <!-- Inputs OTP -->
+                <div class="d-flex justify-content-center gap-2 mb-3">
+                    <input type="text" class="otp-input form-control text-center fw-bold fs-4 rounded-3 p-2"
+                           maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp1" style="width:48px;height:56px;" />
+                    <input type="text" class="otp-input form-control text-center fw-bold fs-4 rounded-3 p-2"
+                           maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp2" style="width:48px;height:56px;" />
+                    <input type="text" class="otp-input form-control text-center fw-bold fs-4 rounded-3 p-2"
+                           maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp3" style="width:48px;height:56px;" />
+                    <input type="text" class="otp-input form-control text-center fw-bold fs-4 rounded-3 p-2"
+                           maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp4" style="width:48px;height:56px;" />
+                    <input type="text" class="otp-input form-control text-center fw-bold fs-4 rounded-3 p-2"
+                           maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp5" style="width:48px;height:56px;" />
+                    <input type="text" class="otp-input form-control text-center fw-bold fs-4 rounded-3 p-2"
+                           maxlength="1" inputmode="numeric" pattern="[0-9]" id="otp6" style="width:48px;height:56px;" />
+                </div>
+
+                <button type="button" id="btnVerificarOtp" class="btn btn-primary w-100 rounded-3 fw-semibold mb-3">
+                    <i class="bi bi-check-circle me-2"></i>Verificar código
+                </button>
+
+                <div class="text-center">
+                    <small class="text-muted">¿No recibiste el código?</small>
+                    <button type="button" id="btnReenviarOtp" class="btn btn-link btn-sm text-primary p-0 ms-1 fw-semibold">
+                        Reenviar
+                    </button>
+                    <small id="otpTimer" class="text-muted ms-1"></small>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0 pb-3 justify-content-center">
+                <small class="text-muted"><i class="bi bi-clock me-1"></i>El código expira en 90 segundos</small>
+            </div>
+        </div>
     </div>
 </div>
 

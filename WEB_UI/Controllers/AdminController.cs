@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WEB_UI.Controllers
 {
@@ -8,7 +8,7 @@ namespace WEB_UI.Controllers
         {
             //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
             //    return RedirectToAction("Index", "Login");
-            //if (HttpContext.Session.GetString("UserRole") != "Admin")
+            //if (HttpContext.Session.GetString("UserRole") != "Administrador")
             //    return RedirectToAction("Index", "Home");
             return null;
         }
@@ -32,6 +32,20 @@ namespace WEB_UI.Controllers
             var check = CheckSession();
             if (check != null) return check;
             ViewBag.UserId = id;
+            return View();
+        }
+
+        public IActionResult RegisterAdmin()
+        {
+            var check = CheckSession();
+            if (check != null) return check;
+            return View();
+        }
+
+        public IActionResult RegisterEngineer()
+        {
+            var check = CheckSession();
+            if (check != null) return check;
             return View();
         }
 

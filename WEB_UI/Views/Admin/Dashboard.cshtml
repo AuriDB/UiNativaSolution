@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Dashboard Global";
     var userName = Context.Session.GetString("UserName") ?? "Administrador";
@@ -129,17 +129,34 @@
                 </h6>
             </div>
             <div class="card-body px-4 pb-4">
+                <!-- Se comienza con el registro de los usuarios por parte del Admin *ojo por Eric tambien trabaja en esto verificar conflictos despues* -->
                 <div class="d-grid gap-3">
-                    <a href="/Admin/Users"
+                    <a href="/Admin/RegisterAdmin"
+                       class="btn btn-danger rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-person-fill-gear fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Registrar Administrador</div>
+                            <div class="small opacity-75">Crear cuenta de admin</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/RegisterEngineer"
                        class="btn btn-primary rounded-3 text-start d-flex align-items-center gap-3">
+                        <i class="bi bi-person-badge fs-4 flex-shrink-0"></i>
+                        <div>
+                            <div class="fw-semibold">Registrar Ingeniero</div>
+                            <div class="small opacity-75">Crear cuenta de ingeniero</div>
+                        </div>
+                    </a>
+                    <a href="/Admin/Users"
+                       class="btn btn-outline-primary rounded-3 text-start d-flex align-items-center gap-3">
                         <i class="bi bi-people fs-4 flex-shrink-0"></i>
                         <div>
                             <div class="fw-semibold">Gestión de usuarios</div>
-                            <div class="small opacity-75">Crear, editar, inactivar</div>
+                            <div class="small opacity-75">Ver y administrar cuentas</div>
                         </div>
                     </a>
                     <a href="/Admin/Properties"
-                       class="btn btn-outline-primary rounded-3 text-start d-flex align-items-center gap-3">
+                       class="btn btn-outline-success rounded-3 text-start d-flex align-items-center gap-3">
                         <i class="bi bi-map fs-4 flex-shrink-0"></i>
                         <div>
                             <div class="fw-semibold">Gestión de fincas</div>
