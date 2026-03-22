@@ -1,5 +1,187 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Cola FIFO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
+        <div>
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-list-task text-primary me-2"></i>Cola FIFO
+            </h4>
+            <p class="text-muted mb-0">Solicitudes pendientes de evaluación técnica.</p>
+        </div>
+        <a asp-controller="Engineer" asp-action="Dashboard" class="btn btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i>Volver al Dashboard
+        </a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body px-4 py-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Buscar</label>
+                    <input type="text" class="form-control rounded-3" placeholder="Nombre de finca o propietario">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Provincia</label>
+                    <select class="form-select rounded-3">
+                        <option selected>Todas</option>
+                        <option>San José</option>
+                        <option>Alajuela</option>
+                        <option>Heredia</option>
+                        <option>Cartago</option>
+                        <option>Guanacaste</option>
+                        <option>Puntarenas</option>
+                        <option>Limón</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Prioridad</label>
+                    <select class="form-select rounded-3">
+                        <option selected>Todas</option>
+                        <option>Alta</option>
+                        <option>Media</option>
+                        <option>Baja</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary rounded-3 w-100">
+                        <i class="bi bi-funnel me-1"></i>Filtrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen rápido -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Pendientes hoy</p>
+                    <h3 class="fw-bold mb-0">8</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Prioridad alta</p>
+                    <h3 class="fw-bold mb-0 text-danger">2</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">En revisión</p>
+                    <h3 class="fw-bold mb-0 text-success">3</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla FIFO -->
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body px-4 py-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-semibold mb-0">
+                    <i class="bi bi-clock-history me-2 text-warning"></i>Solicitudes en cola
+                </h5>
+                <span class="badge bg-light text-dark rounded-pill">Ordenadas por ingreso</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Finca</th>
+                            <th>Propietario</th>
+                            <th>Ubicación</th>
+                            <th>Fecha ingreso</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                            <th class="text-end">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Finca La Esperanza</td>
+                            <td>María Gómez</td>
+                            <td>San Carlos, Alajuela</td>
+                            <td>21/03/2026</td>
+                            <td><span class="badge bg-danger rounded-pill">Alta</span></td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Pendiente</span></td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="1" class="btn btn-success btn-sm rounded-3">
+                                    <i class="bi bi-search me-1"></i>Evaluar
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Finca El Bosque</td>
+                            <td>Carlos Ramírez</td>
+                            <td>Upala, Alajuela</td>
+                            <td>20/03/2026</td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Media</span></td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Pendiente</span></td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="2" class="btn btn-success btn-sm rounded-3">
+                                    <i class="bi bi-search me-1"></i>Evaluar
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Finca Los Pinos</td>
+                            <td>Ana Solís</td>
+                            <td>Guatuso, Alajuela</td>
+                            <td>19/03/2026</td>
+                            <td><span class="badge bg-secondary rounded-pill">Baja</span></td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Pendiente</span></td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="3" class="btn btn-success btn-sm rounded-3">
+                                    <i class="bi bi-search me-1"></i>Evaluar
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Finca Verde Alto</td>
+                            <td>Luis Herrera</td>
+                            <td>San Ramón, Alajuela</td>
+                            <td>18/03/2026</td>
+                            <td><span class="badge bg-danger rounded-pill">Alta</span></td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Pendiente</span></td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="4" class="btn btn-success btn-sm rounded-3">
+                                    <i class="bi bi-search me-1"></i>Evaluar
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Finca Río Claro</td>
+                            <td>Sofía Méndez</td>
+                            <td>Zarcero, Alajuela</td>
+                            <td>17/03/2026</td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Media</span></td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Pendiente</span></td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="5" class="btn btn-success btn-sm rounded-3">
+                                    <i class="bi bi-search me-1"></i>Evaluar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
