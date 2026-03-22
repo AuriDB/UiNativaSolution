@@ -1,5 +1,160 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
+        <div>
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-person-circle text-primary me-2"></i>Perfil del Ingeniero
+            </h4>
+            <p class="text-muted mb-0">Información general y resumen de actividad profesional.</p>
+        </div>
+        <a asp-controller="Engineer" asp-action="Dashboard" class="btn btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i>Volver al Dashboard
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Columna izquierda -->
+        <div class="col-lg-8">
+            <!-- Tarjeta principal del perfil -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body px-4 py-4">
+                    <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4">
+                        <div class="text-center">
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center"
+                                 style="width: 110px; height: 110px; font-size: 3rem;">
+                                <i class="bi bi-person text-secondary"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <h4 class="fw-bold mb-1">Ing. Daniel Rojas</h4>
+                            <p class="text-muted mb-3">Ingeniero Forestal</p>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block">Correo electrónico</small>
+                                    <span class="fw-semibold">daniel.rojas@psa.com</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block">Teléfono</small>
+                                    <span class="fw-semibold">+506 8888-7777</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block">Número de colegiado</small>
+                                    <span class="fw-semibold">CF-2026-014</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted d-block">Estado</small>
+                                    <span class="badge bg-success rounded-pill">Activo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-file-earmark-text me-2 text-success"></i>Información Profesional
+                    </h5>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Especialidad</label>
+                            <input type="text" class="form-control rounded-3" value="Evaluación ambiental y forestal" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Región asignada</label>
+                            <input type="text" class="form-control rounded-3" value="Zona Norte" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Años de experiencia</label>
+                            <input type="text" class="form-control rounded-3" value="8 años" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Tipo de usuario</label>
+                            <input type="text" class="form-control rounded-3" value="Ingeniero" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biografía / descripción -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-card-text me-2 text-warning"></i>Resumen Profesional
+                    </h5>
+                    <p class="text-muted mb-0">
+                        Profesional encargado de evaluar solicitudes de fincas bajo criterios técnicos y ambientales,
+                        verificando la información presentada por los propietarios y emitiendo dictámenes de aprobación,
+                        devolución o rechazo según corresponda. Participa activamente en el seguimiento de expedientes
+                        y en el análisis del cumplimiento de los requisitos del programa.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="col-lg-4">
+            <!-- Métricas -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-bar-chart-line me-2 text-primary"></i>Resumen de Actividad
+                    </h5>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Solicitudes evaluadas</small>
+                        <span class="fw-bold fs-4">24</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Aprobadas</small>
+                        <span class="fw-bold fs-5 text-success">15</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Devueltas</small>
+                        <span class="fw-bold fs-5 text-warning">4</span>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">Rechazadas</small>
+                        <span class="fw-bold fs-5 text-danger">5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones rápidas -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body px-4 py-4">
+                    <h5 class="fw-semibold mb-3">
+                        <i class="bi bi-lightning-charge me-2 text-secondary"></i>Accesos rápidos
+                    </h5>
+
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Engineer" asp-action="FifoQueue" class="btn btn-primary rounded-3">
+                            <i class="bi bi-list-task me-1"></i>Ver Cola FIFO
+                        </a>
+
+                        <a asp-controller="Engineer" asp-action="History" class="btn btn-outline-success rounded-3">
+                            <i class="bi bi-clock-history me-1"></i>Ver Historial
+                        </a>
+
+                        <a asp-controller="Engineer" asp-action="Dashboard" class="btn btn-outline-secondary rounded-3">
+                            <i class="bi bi-speedometer2 me-1"></i>Ir al Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
