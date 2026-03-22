@@ -1,5 +1,172 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Historial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
+        <div>
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-clock-history text-primary me-2"></i>Historial de Evaluaciones
+            </h4>
+            <p class="text-muted mb-0">Registro de solicitudes ya evaluadas por el ingeniero.</p>
+        </div>
+        <a asp-controller="Engineer" asp-action="Dashboard" class="btn btn-outline-secondary rounded-3">
+            <i class="bi bi-arrow-left me-1"></i>Volver al Dashboard
+        </a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body px-4 py-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Buscar</label>
+                    <input type="text" class="form-control rounded-3" placeholder="Nombre de finca o propietario">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Resultado</label>
+                    <select class="form-select rounded-3">
+                        <option selected>Todos</option>
+                        <option>Aprobada</option>
+                        <option>Rechazada</option>
+                        <option>Devuelta</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Fecha</label>
+                    <input type="date" class="form-control rounded-3">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary rounded-3 w-100">
+                        <i class="bi bi-funnel me-1"></i>Filtrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen rápido -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total evaluadas</p>
+                    <h3 class="fw-bold mb-0">24</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Aprobadas</p>
+                    <h3 class="fw-bold mb-0 text-success">15</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Pendientes de corrección</p>
+                    <h3 class="fw-bold mb-0 text-warning">4</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de historial -->
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body px-4 py-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-semibold mb-0">
+                    <i class="bi bi-journal-check me-2 text-success"></i>Evaluaciones registradas
+                </h5>
+                <span class="badge bg-light text-dark rounded-pill">Últimos movimientos</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Finca</th>
+                            <th>Propietario</th>
+                            <th>Fecha evaluación</th>
+                            <th>Resultado</th>
+                            <th>Observación</th>
+                            <th class="text-end">Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Finca Los Pollitos</td>
+                            <td>María Gómez</td>
+                            <td>21/03/2026</td>
+                            <td><span class="badge bg-success rounded-pill">Aprobada</span></td>
+                            <td>Cumple con criterios ambientales.</td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="1" class="btn btn-outline-primary btn-sm rounded-3">
+                                    <i class="bi bi-eye me-1"></i>Ver
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Finca Gallinitas</td>
+                            <td>Carlos Ramírez</td>
+                            <td>20/03/2026</td>
+                            <td><span class="badge bg-danger rounded-pill">Rechazada</span></td>
+                            <td>No presenta información suficiente.</td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="2" class="btn btn-outline-primary btn-sm rounded-3">
+                                    <i class="bi bi-eye me-1"></i>Ver
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Los Puerquitos Farm</td>
+                            <td>Ana Solís</td>
+                            <td>19/03/2026</td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Devuelta</span></td>
+                            <td>Se solicitaron correcciones al propietario.</td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="3" class="btn btn-outline-primary btn-sm rounded-3">
+                                    <i class="bi bi-eye me-1"></i>Ver
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Finca Verde Alto</td>
+                            <td>Luis Herrera</td>
+                            <td>18/03/2026</td>
+                            <td><span class="badge bg-success rounded-pill">Aprobada</span></td>
+                            <td>Solicitud aprobada sin observaciones mayores.</td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="4" class="btn btn-outline-primary btn-sm rounded-3">
+                                    <i class="bi bi-eye me-1"></i>Ver
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Farm Ville</td>
+                            <td>Sofía Méndez</td>
+                            <td>17/03/2026</td>
+                            <td><span class="badge bg-warning text-dark rounded-pill">Devuelta</span></td>
+                            <td>Se requiere ampliar documentación legal.</td>
+                            <td class="text-end">
+                                <a asp-controller="Engineer" asp-action="Evaluation" asp-route-id="5" class="btn btn-outline-primary btn-sm rounded-3">
+                                    <i class="bi bi-eye me-1"></i>Ver
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
